@@ -1,13 +1,23 @@
-import './Navbar.css'
+import style from './Navbar.module.css'
 
 const Navbar = () => {
     return (
-        <nav className='navigation'>
-            <div><a href="#">Profile</a></div>
-            <div><a href="#">Messages</a></div>
-            <div><a href="#">Feeds</a></div>
-            <div><a href="#">Music</a></div>
-            <div><a href="#">Settings</a></div>
+        <nav className={style.navigation}>
+            <div className={`${style.item} ${style.active}`}>
+                <a>Profile</a>
+            </div>
+            <div className={style.item}>
+                <a>Messages</a>
+            </div>
+            <div className={style.item}>
+                <a>Feeds</a>
+            </div>
+            <div className={style.item}>
+                <a>Music</a>
+            </div>
+            <div className={style.item}>
+                <a>Settings</a>
+            </div>
         </nav>
     );
 }

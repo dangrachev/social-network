@@ -1,0 +1,25 @@
+.navigation {
+  grid-area: nav;
+
+  background: #ff9f37;
+  padding: 12px;
+}
+
+.item:nth-last-child(0n+1){
+  margin-top: 25px;
+}
+
+.item {
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.item:hover {
+  color: #ff577d;
+  font-size: 18px;
+}
+
+.active {
+  color: #9641ff;
+}
