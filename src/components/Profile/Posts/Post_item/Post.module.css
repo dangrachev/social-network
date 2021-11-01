@@ -1,0 +1,14 @@
+.post_wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.userAvatar {
+    background: url('https://lh3.googleusercontent.com/a-/AOh14GjROELhkQmyMgz5yNVHOc7wz_GQIsKLSZ3airEACg=s96-c-rg-br100') center no-repeat;
+    background-size: auto 60px;
+    width: 60px;
+    height: 60px;
+    border-radius: 100px;
+    margin-right: 12px;
+}

@@ -3,6 +3,7 @@
 
   background: #ff9f37;
   padding: 12px;
+  border-radius: 8px;
 }
 
 .item:nth-last-child(0n+1){
