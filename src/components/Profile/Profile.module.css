@@ -1,6 +1,4 @@
 .profile_wrapper {
-    grid-area: cont;
-
     border: 2px dashed #d555ff;
     padding: 15px;
 }

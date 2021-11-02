@@ -12,3 +12,18 @@
     border-radius: 100px;
     margin-right: 12px;
 }
+
+.like_wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.like_icon {
+    width: 16px;
+    height: 15px;
+    margin: 0 3px 0 8px;
+}
+
+.like_count {
+    color: red;
+}
