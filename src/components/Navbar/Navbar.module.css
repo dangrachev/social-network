@@ -10,17 +10,17 @@
   margin-top: 25px;
 }
 
-.item {
+.item a {
   color: #fff;
   text-decoration: none;
-  cursor: pointer;
 }
 
-.item:hover {
-  color: #ff577d;
+.item a:hover {
+  color: #ff3668;
   font-size: 18px;
 }
 
-.active {
+
+.item a.active {
   color: #9641ff;
 }
