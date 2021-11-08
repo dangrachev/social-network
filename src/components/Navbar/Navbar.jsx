@@ -1,7 +1,8 @@
 import style from './Navbar.module.css'
 import {NavLink} from "react-router-dom";
+import DialogItem from "../Messages/DialogItem/DialogItem";
 
-const Navbar = () => {
+const Navbar = (props) => {
     return (
         <nav className={style.navigation}>
             <div className={style.item}>
@@ -19,6 +20,7 @@ const Navbar = () => {
             <div className={style.item}>
                 <NavLink to='/settings' activeClassName={style.active}>Settings</NavLink>
             </div>
+
         </nav>
     );
 }

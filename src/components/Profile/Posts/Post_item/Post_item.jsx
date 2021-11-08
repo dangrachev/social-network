@@ -7,7 +7,7 @@ const Post = (props) => {
             <p className={style.postText}>{props.message}</p>
             <div className={style.like_wrapper}>
                 <img className={style.like_icon} src="https://icon-library.com/images/twitter-like-icon/twitter-like-icon-21.jpg" alt="like"/>
-                <span className={style.like_count}>{props.likes}</span>
+                <span className={style.like_count}>{props.likesCount}</span>
             </div>
         </div>
     );

@@ -1,0 +1,22 @@
+.dialogs_item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.dialogs_item a {
+    text-decoration: none;
+    color: #ff577d;
+}
+
+.dialogs_item a:hover {
+    color: #4d76cb;
+}
+
+.userAvatar {
+    width: 50px;
+    height: 50px;
+    border: 1px solid #7200ff;
+    border-radius: 100px;
+    margin-right: 12px;
+}

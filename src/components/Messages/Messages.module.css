@@ -1,18 +1,6 @@
 .messages_wrapper {
     display: grid;
     grid-template-columns: 2fr 10fr;
-}
 
-.dialogs_item,
-.messages_item {
-    margin-bottom: 15px;
-}
-
-.dialogs_item a {
-    text-decoration: none;
-    color: #ff577d;
-}
-
-.dialogs_item a:hover {
-    color: #4d76cb;
+    padding: 15px;
 }

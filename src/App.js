@@ -9,18 +9,18 @@ import Settings from "./components/Settings/Settings";
 import {BrowserRouter, Route} from "react-router-dom";
 //import Footer from './components/Footer/Footer';
 
-const App = () => {
+const App = (props) => {
     return (
         <BrowserRouter>
             <div className="app_wrapper">
                 <Header/>
                 <Navbar/>
                 <div className="content_wrapper">
-                    <Route path='/profile' component={Profile}/>
-                    <Route path='/messages' component={Messages}/>
-                    <Route path='/feeds' component={Feeds}/>
-                    <Route path='/music' component={Music}/>
-                    <Route path='/settings' component={Settings}/>
+                    <Route path='/profile' render={ () => <Profile state={props.state.profilePage} />}/>
+                    <Route path='/messages' render={ () => <Messages state={props.state.messagesPage} />}/>
+                    <Route path='/feeds' render={ () => <Feeds/> }/>
+                    <Route path='/music'render={ () => <Music/> }/>
+                    <Route path='/settings' render={ () => <Settings/> }/>
                 </div>
             </div>
         </BrowserRouter>
