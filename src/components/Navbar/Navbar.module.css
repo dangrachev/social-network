@@ -6,7 +6,7 @@
   border-radius: 8px;
 }
 
-.item:nth-last-child(0n+1){
+.item:nth-last-child(0n+2){
   margin-top: 25px;
 }
 
@@ -23,4 +23,8 @@
 
 .item a.active {
   color: #9641ff;
+}
+
+.friendsWrap {
+  margin-top: 70px;
 }

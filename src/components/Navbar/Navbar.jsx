@@ -1,8 +1,13 @@
 import style from './Navbar.module.css'
-import {NavLink} from "react-router-dom";
-import DialogItem from "../Messages/DialogItem/DialogItem";
+import {NavLink} from 'react-router-dom';
+import SidebarFriends from './SidebarFiends/SidebarFriends';
+
 
 const Navbar = (props) => {
+
+    // mapping friendsList into components
+    let friendsList = props.state.friendsList.map( friend => <SidebarFriends id={friend.id} name={friend.name}/> )
+
     return (
         <nav className={style.navigation}>
             <div className={style.item}>
@@ -21,6 +26,10 @@ const Navbar = (props) => {
                 <NavLink to='/settings' activeClassName={style.active}>Settings</NavLink>
             </div>
 
+            <div className={style.friendsWrap}>
+                <h3>Friends</h3>
+                {friendsList}
+            </div>
         </nav>
     );
 }

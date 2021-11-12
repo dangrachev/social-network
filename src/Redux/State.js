@@ -21,6 +21,23 @@ let state = {
             {id: 1, message: "I'm on the highway to hell", likesCount: 42},
         ],
     },
+    sidebar: {
+        friendsList: [
+            {id: 0, name: "Woody"},
+            {id: 1, name: "Alex"},
+            {id: 2, name: "Rick"},
+        ],
+    },
 }
+
+export let addPost = (postMessage) => {
+    let newPost = {
+        id: 2,
+        message: postMessage,
+        likesCount: 0
+    }
+    state.profilePage.postsData.push(newPost);
+}
+
 
 export default state;

@@ -1,0 +1,18 @@
+.sidebarFriends {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.userAvatar {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #7200ff;
+    border-radius: 100px;
+    margin-right: 12px;
+}
+
+.sidebarFriends a {
+    text-decoration: none;
+    color: #fff;
+}
