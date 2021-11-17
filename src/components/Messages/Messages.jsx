@@ -7,8 +7,8 @@ import React from "react";
 const Messages = (props) => {
 
     // mapping usersData & messagesData into components
-    let usersElements = props.state.usersData.map( user => <DialogItem id={user.id} name={user.name}/>);
-    let messagesElements = props.state.messagesData.map( message => <Message message={message.messageText}/>);
+    let usersElements = props.messagesPage.usersData.map( user => <DialogItem id={user.id} name={user.name}/>);
+    let messagesElements = props.messagesPage.messagesData.map( message => <Message message={message.messageText}/>);
 
     // ref fot textarea
     const textMessageElement = React.createRef();

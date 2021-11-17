@@ -6,20 +6,28 @@ import Post from "./Post_item/Post_item";
 const Posts = (props) => {
 
     // mapping postsData into component
-    let postsElements = props.postsData.map( post => <Post message={post.message} likesCount={post.likesCount}/> );
+    let postsElements = props.postsData.map(post => <Post message={post.message} likesCount={post.likesCount}/>);
 
     // ref for textarea
     const newPostElement = React.createRef();
-    const sendPost = () => {
+
+    // function to push textarea content into state.profilePage.postText
+    let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.addPost(text);
+        props.updatePostText(text);
+    }
+
+    // function to sending post text to the state
+    let sendPost = () => {
+        props.addPost();
     }
 
     return (
         <div className={style.posts_wrapper}>
             <div className={style.posts_header}>My posts</div>
             <div className={style.form_wrapper}>
-                <textarea ref={newPostElement} className={style.textarea}></textarea>
+                <textarea ref={newPostElement} onChange={onPostChange} value={props.postText}
+                          className={style.textarea}/>
                 <button className={style.btnPost} onClick={sendPost}>Add post</button>
             </div>
             <div className={style.posts}>
