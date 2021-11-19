@@ -14,12 +14,15 @@ const Posts = (props) => {
     // function to push textarea content into state.profilePage.postText
     let onPostChange = () => {
         let text = newPostElement.current.value;
-        props.updatePostText(text);
+        // before dispatch: props.updatePostText(text);
+        props.dispatch({type: 'UPDATE-POST-TEXT', newText: text});
+
     }
 
     // function to sending post text to the state
     let sendPost = () => {
-        props.addPost();
+        // before dispatch: props.addPost();
+        props.dispatch({type: 'ADD-POST'});
     }
 
     return (
