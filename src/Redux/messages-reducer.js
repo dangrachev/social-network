@@ -22,4 +22,12 @@ const messagesReducer = (state, action) => {
     }
 }
 
+export const sendMessage_actionCreator = () => {
+    return {type: SEND_MESSAGE}
+}
+
+export const updateMessageText_actionCreator = (text) => {
+    return {type: UPDATE_MESSAGE_TEXT, body: text}
+}
+
 export default messagesReducer;
