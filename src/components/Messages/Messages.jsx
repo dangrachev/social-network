@@ -1,7 +1,8 @@
+import React from "react";
 import style from './Messages.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import React from "react";
+import {sendMessage_actionCreator, updateMessageText_actionCreator} from "../../Redux/State";
 
 
 const Messages = (props) => {
@@ -10,11 +11,15 @@ const Messages = (props) => {
     let usersElements = props.messagesPage.usersData.map( user => <DialogItem id={user.id} name={user.name}/>);
     let messagesElements = props.messagesPage.messagesData.map( message => <Message message={message.messageText}/>);
 
-    // ref fot textarea
-    const textMessageElement = React.createRef();
-    const sendMessage = () => {
-        let text = textMessageElement.current.value;
-        alert(text);
+    // function to push textarea content into state.messagesPage.messageBody
+    let onMessageChange = (e) => {
+        let text = e.target.value;
+        props.dispatch(updateMessageText_actionCreator(text));
+    }
+
+    // function to sending post text to the state.messagesPage.messagesData
+    let onSendMessageClick = () => {
+        props.dispatch(sendMessage_actionCreator());
     }
 
     return (
@@ -27,8 +32,9 @@ const Messages = (props) => {
             </div>
 
             <div className={style.textareaWrapper}>
-                <textarea className={style.textarea} ref={textMessageElement}></textarea>
-                <button className={style.btn_sendMessage} onClick={sendMessage}>Send message</button>
+                <textarea onChange={onMessageChange} value={props.messagesPage.messageBody}
+                          className={style.textarea}/>
+                <button className={style.btn_sendMessage} onClick={onSendMessageClick}>Send message</button>
             </div>
         </div>
     );

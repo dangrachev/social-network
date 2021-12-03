@@ -1,11 +1,12 @@
 import React from "react";
 import style from './Posts.module.css'
 import Post from "./Post_item/Post_item";
+import {addPost_actionCreator, updatePostText_actionCreator} from "../../../Redux/State";
 
 
 const Posts = (props) => {
 
-    // mapping postsData into component
+    // mapping postsData into components
     let postsElements = props.postsData.map(post => <Post message={post.message} likesCount={post.likesCount}/>);
 
     // ref for textarea
@@ -15,14 +16,14 @@ const Posts = (props) => {
     let onPostChange = () => {
         let text = newPostElement.current.value;
         // before dispatch: props.updatePostText(text);
-        props.dispatch({type: 'UPDATE-POST-TEXT', newText: text});
+        props.dispatch(updatePostText_actionCreator(text));
 
     }
 
-    // function to sending post text to the state
+    // function to sending post text to the state.profilePage.postsData
     let sendPost = () => {
         // before dispatch: props.addPost();
-        props.dispatch({type: 'ADD-POST'});
+        props.dispatch(addPost_actionCreator());
     }
 
     return (
