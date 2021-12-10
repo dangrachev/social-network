@@ -2,7 +2,6 @@ import React from "react";
 import style from './Messages.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {sendMessage_actionCreator, updateMessageText_actionCreator} from "../../Redux/messages-reducer";
 
 
 const Messages = (props) => {
@@ -14,12 +13,12 @@ const Messages = (props) => {
     // function to push textarea content into state.messagesPage.messageBody
     let onMessageChange = (e) => {
         let text = e.target.value;
-        props.dispatch(updateMessageText_actionCreator(text));
+        props.updateMessageText(text);
     }
 
     // function to sending post text to the state.messagesPage.messagesData
     let onSendMessageClick = () => {
-        props.dispatch(sendMessage_actionCreator());
+        props.sendMessage();
     }
 
     return (

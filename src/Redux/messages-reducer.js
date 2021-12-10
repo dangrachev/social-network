@@ -1,7 +1,24 @@
+// action types
 const SEND_MESSAGE = 'SEND-MESSAGE';
 const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
 
-const messagesReducer = (state, action) => {
+let initialState = {
+    usersData: [
+        {id: 0, name: 'Woody'},
+        {id: 1, name: 'Alex'},
+        {id: 2, name: 'Rick'},
+        {id: 3, name: 'Alice'},
+    ],
+    messagesData: [
+        {id: 0, messageText: 'Hello, world'},
+        {id: 1, messageText: 'Hahahahaha'},
+        {id: 2, messageText: 'WUBBA-LUBBA-DUB-DUB'},
+        {id: 3, messageText: 'Howdy ho!'},
+    ],
+    messageBody: '',
+};
+
+const messagesReducer = (state = initialState, action) => {
 
     switch (action.type){
         case SEND_MESSAGE:
