@@ -6,7 +6,7 @@ import SidebarFriends from './SidebarFiends/SidebarFriends';
 const Navbar = (props) => {
 
     // mapping friendsList into components
-    let friendsList = props.state.friendsList.map( friend => <SidebarFriends id={friend.id} name={friend.name}/> )
+    let friendsList = props.sidebar.friendsList.map( friend => <SidebarFriends id={friend.id} name={friend.name}/> )
 
     return (
         <nav className={style.navigation}>
