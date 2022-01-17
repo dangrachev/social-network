@@ -18,7 +18,7 @@ const Posts = (props) => {
 
     }
 
-    // function to sending post text to the state.profilePage.postsData
+    // function to sending post text to state.profilePage.postsData
     let onSendPost = () => {
         props.addPost();
         //props.dispatch(addPost_actionCreator());

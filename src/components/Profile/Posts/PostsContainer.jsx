@@ -14,7 +14,6 @@ import {connect} from "react-redux";
                     // function to push textarea content into state.profilePage.postText
                     let onPostChange = (text) => {
                         store.dispatch(updatePostText_actionCreator(text));
-
                     }
 
                     // function to sending post text to the state.profilePage.postsData

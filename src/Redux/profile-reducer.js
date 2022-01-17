@@ -11,27 +11,21 @@ let initialState = {
 };
 
 const profileReducer = (state = initialState, action) => {
-
     switch (action.type) {
-        case ADD_POST: {
+        case ADD_POST:
             // receiving Posts data and pushing into state.profilePage.postsData
-            let newPost = {
-                id: 2,
-                message: state.postText,
-                likesCount: 0
+            let text = state.postText
+            return {
+                ...state,
+                postText: '',
+                postsData: [...state.postsData, {id: 2, message: text, likesCount: 0}]
             }
-            let stateCopy = {...state};
-            stateCopy.postData = [...state.postsData];
-            stateCopy.postsData.push(newPost);
-            stateCopy.postText = '';
-            return stateCopy;
-        }
-        case UPDATE_POST_TEXT: {
+        case UPDATE_POST_TEXT:
             // pushing textarea content into state.profilePage.postText
-            let stateCopy = {...state}
-            stateCopy.postText = action.newText;
-            return stateCopy;
-        }
+            return {
+                ...state,
+                postText: action.newText
+            }
         default:
             return state;
     }
