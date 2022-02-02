@@ -1,0 +1,26 @@
+.userWrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.user {
+    text-align: center;
+}
+
+.userPhoto {
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    border-radius: 100px;
+}
+
+.userName {
+    margin-right: 25px;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.userLocation span:first-child {
+   margin-right: 10px;
+}
