@@ -24,3 +24,18 @@
 .userLocation span:first-child {
    margin-right: 10px;
 }
+
+.paginationWrap {
+    text-align: center;
+}
+
+.paginationWrap span{
+    cursor: pointer;
+    margin: 0 5px 0;
+}
+
+.currentPage {
+    font-weight: bold;
+    font-size: 18px;
+    color: #9641ff;
+}

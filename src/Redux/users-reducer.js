@@ -1,13 +1,20 @@
 // action types
 const TOGGLE_FOLLOW = 'TOGGLE_FOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
+const TOGGLE_FETCHING = 'SET_FETCHING'
 
 let initialState = {
-        users: [
-            /*{id: 0, followed: true, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Rick', status: 'wldd', location: {country: 'USA', city: ''}},
-            {id: 1, followed: false, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Jarred', status: '30stm', location: {country: 'USA', city: 'Los-Angeles'}},
-            {id: 2, followed: false, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Maloy', status: 'Fuck u', location: {country: 'USA', city: 'Brickleberry'}},*/
-        ]
+    users: [
+        /*{id: 0, followed: true, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Rick', status: 'wldd', location: {country: 'USA', city: ''}},
+        {id: 1, followed: false, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Jarred', status: '30stm', location: {country: 'USA', city: 'Los-Angeles'}},
+        {id: 2, followed: false, photoUrl: 'https://64.media.tumblr.com/avatar_ce0627a8d453_128.pnj', fullName: 'Maloy', status: 'Fuck u', location: {country: 'USA', city: 'Brickleberry'}},*/
+    ],
+    pageSize: 5,
+    totalUsersCount: 0,
+    currentPage: 1,
+    isFetching: false
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -15,8 +22,8 @@ const usersReducer = (state = initialState, action) => {
         case TOGGLE_FOLLOW:
             return {
                 ...state,
-                users: state.users.map( u => {
-                    if(u.id === action.userId) {
+                users: state.users.map(u => {
+                    if (u.id === action.userId) {
                         return {
                             ...u,
                             followed: !u.followed
@@ -26,15 +33,24 @@ const usersReducer = (state = initialState, action) => {
                 })
             }
         case SET_USERS:
-            return {...state, users: [...state.users, ...action.users]}
+            return {...state, users: action.users}
+        case SET_CURRENT_PAGE:
+            return {...state, currentPage: action.currentPage}
+        case SET_TOTAL_USERS_COUNT:
+            return {...state, totalUsersCount: action.totalCount}
+        case TOGGLE_FETCHING:
+            return {...state, isFetching: action.isFetching}
         default:
             return state;
     }
 }
 
-
+// action creators
 export const toggleFollowAC = (userId) => ({type: TOGGLE_FOLLOW, userId})
 export const setUsersAC = (users) => ({type: SET_USERS, users})
+export const setCurrentPageAC = (currentPage) => ({type: SET_CURRENT_PAGE, currentPage})
+export const setTotalUsersCountAC = (totalCount) => ({type: SET_TOTAL_USERS_COUNT, totalCount})
+export const toggleFetchingAC = (isFetching) => ({type: TOGGLE_FETCHING, isFetching})
 
 
 export default usersReducer;
