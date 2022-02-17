@@ -18,9 +18,9 @@
 }
 
 .avatar {
-    background: url('https://lh3.googleusercontent.com/a-/AOh14GjROELhkQmyMgz5yNVHOc7wz_GQIsKLSZ3airEACg=s96-c-rg-br100') center no-repeat;
-    width: 88px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
     border-radius: 100px;
     margin-right: 12px;
 }
@@ -31,5 +31,11 @@
 }
 
 .user_info {
+    list-style: none;
+    font-weight: 500;
+    font-size: 18px;
+}
 
+.info_item span{
+    font-weight: 400;
 }

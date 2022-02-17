@@ -1,29 +1,42 @@
 .header {
-  grid-area: head;
+    grid-area: head;
 
-  background: #3ee3ff;
-  padding: 0 8px 0;
-  border-radius: 8px
+    background: #3ee3ff;
+    padding: 0 8px 0;
+    border-radius: 8px;
 }
 
 .logo {
-  position: absolute;
-  width: 60px;
-  height: 60px;
-  -webkit-animation:spin 8s linear infinite;
-  -moz-animation:spin 8s linear infinite;
-  animation:spin 8s linear infinite;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    -webkit-animation: spin 8s linear infinite;
+    -moz-animation: spin 8s linear infinite;
+    animation: spin 8s linear infinite;
 }
 
 @-moz-keyframes spin {
-  100% { -moz-transform: rotate(360deg); }
+    100% {
+        -moz-transform: rotate(360deg);
+    }
 }
+
 @-webkit-keyframes spin {
-  100% { -webkit-transform: rotate(360deg); }
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
 }
+
 @keyframes spin {
-  100% {
-    -webkit-transform: rotate(360deg);
-    transform:rotate(360deg);
-  }
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+.loginBlock {
+  transform: translateY(50%);
+  float: right;
+  font-size: 18px;
+  color: #727272;
 }

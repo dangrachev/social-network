@@ -16,9 +16,15 @@
 }
 
 .userName {
+    font-size: 18px;
     margin-right: 25px;
     margin-left: 20px;
     font-weight: bold;
+}
+
+.userName__status {
+    font-size: 16px;
+    color: #696969;
 }
 
 .userLocation span:first-child {

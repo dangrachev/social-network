@@ -1,4 +1,4 @@
-
+// Учебная реализация store
 
 let store = {
     _state: {

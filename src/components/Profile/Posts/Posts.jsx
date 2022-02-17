@@ -5,7 +5,9 @@ import Post from "./Post_item/Post_item";
 
 const Posts = (props) => {
     // mapping postsData into components
-    let postsElements = props.profilePage.postsData.map(post => <Post message={post.message} likesCount={post.likesCount}/>);
+    let postsElements = props.profilePage.postsData.map(post => <Post key={post.id} message={post.message}
+                                                                      likesCount={post.likesCount}
+                                                                      profile={props.profile}/>);
 
     // ref for textarea
     const newPostElement = React.createRef();

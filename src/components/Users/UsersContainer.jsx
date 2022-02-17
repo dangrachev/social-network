@@ -1,31 +1,32 @@
 import React from 'react';
-import {toggleFollowAC, setUsersAC, setCurrentPageAC, setTotalUsersCountAC, toggleFetchingAC} from '../../Redux/users-reducer';
+import {toggleFollow, setUsers, setCurrentPage, setTotalUsersCount, toggleFetching} from '../../Redux/users-reducer';
 import {connect} from 'react-redux';
-import * as axios from 'axios';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import {requestApi} from '../../api/requestApi';
 
 
 class UsersContainerAPI extends React.Component {
     componentDidMount() {
-        this.props.toggleFetching(true); // loader gif ON
+        this.props.toggleFetching(true); // гифка загрузки вкл
         // запрос на получение пользователей
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleFetching(false); // loader gif OFF
-                this.props.setUsers(response.data.items);
-                this.props.setTotalUsersCount(response.data.totalCount);
+        requestApi.getUsers(this.props.currentPage, this.props.pageSize)
+            .then(data => {
+                this.props.toggleFetching(false); // гифка загрузки выкл
+                this.props.setUsers(data.items);
+                this.props.setTotalUsersCount(data.totalCount);
             });
     }
 
     // метод для получения пользователей по странично
     onPageChanged = (pageNumber) => {
         this.props.setCurrentPage(pageNumber);
-        this.props.toggleFetching(true); // loader gif ON
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then(response => {
-                this.props.toggleFetching(false); // loader gif OFF
-                this.props.setUsers(response.data.items);
+        this.props.toggleFetching(true); // гифка загрузки вкл
+
+        requestApi.getUsers(pageNumber, this.props.pageSize)
+            .then(data => {
+                this.props.toggleFetching(false); // гифка загрузки выкл
+                this.props.setUsers(data.items);
             });
     }
 
@@ -43,7 +44,6 @@ class UsersContainerAPI extends React.Component {
     }
 }
 
-
 let mapStateToProps = (state) => {
     return {
         users: state.usersPage.users,
@@ -54,7 +54,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
+/*let mapDispatchToProps = (dispatch) => {
     return {
         toggleFollow: (userId) => {
             dispatch(toggleFollowAC(userId));
@@ -72,8 +72,14 @@ let mapDispatchToProps = (dispatch) => {
             dispatch(toggleFetchingAC(isFetching))
         }
     }
-}
-
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersContainerAPI);
+}*/
+// вместо mapDispatchToProps пихаем объект с action creators
+const UsersContainer = connect(mapStateToProps, {
+    toggleFollow,
+    setUsers,
+    setCurrentPage,
+    setTotalUsersCount,
+    toggleFetching
+})(UsersContainerAPI);
 
 export default UsersContainer;

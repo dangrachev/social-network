@@ -6,7 +6,7 @@ import SidebarFriends from './SidebarFiends/SidebarFriends';
 const Navbar = (props) => {
 
     // mapping friendsList into components
-    let friendsList = props.sidebar.friendsList.map( friend => <SidebarFriends id={friend.id} name={friend.name}/> )
+    let friendsList = props.sidebar.friendsList.map( friend => <SidebarFriends key={friend.id} id={friend.id} name={friend.name}/> )
 
     return (
         <nav className={style.navigation}>
@@ -14,10 +14,10 @@ const Navbar = (props) => {
                 <NavLink to='/profile' activeClassName={style.active}>Profile</NavLink>
             </div>
             <div className={style.item}>
-                <NavLink to='/messages' activeClassName={style.active}>Messages</NavLink>
+                <NavLink to='/users' activeClassName={style.active}>Users</NavLink>
             </div>
             <div className={style.item}>
-                <NavLink to='/users' activeClassName={style.active}>Users</NavLink>
+                <NavLink to='/messages' activeClassName={style.active}>Messages</NavLink>
             </div>
             <div className={style.item}>
                 <NavLink to='/feeds' activeClassName={style.active}>Feeds</NavLink>
