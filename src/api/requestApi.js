@@ -8,13 +8,10 @@ const axiosInstance = axios.create({
     }
 });
 
-export const requestApi = {
+export const usersApi = {
     getUsers(currentPage, pageSize) {
         return axiosInstance.get(`users?page=${currentPage}&count=${pageSize}`)
             .then(response => response.data);
-    },
-    authMe() {
-        return axiosInstance.get(`auth/me`).then(response => response.data);
     },
     followRequest(userId) {
         return axiosInstance.post(`follow/${userId}`, null)
@@ -23,5 +20,15 @@ export const requestApi = {
     unfollowRequest(userId) {
         return axiosInstance.delete(`follow/${userId}`)
             .then(response => response.data);
+    },
+    getProfile(userId) {
+        return axiosInstance.get(`profile/${userId}`)
+            .then(response => response.data);
+    }
+}
+
+export const authApi = {
+   me() {
+        return axiosInstance.get(`auth/me`).then(response => response.data);
     }
 }

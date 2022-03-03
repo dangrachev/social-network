@@ -5,9 +5,8 @@ import {NavLink} from 'react-router-dom';
 import {requestApi} from '../../api/requestApi';
 
 // верстку и стили переделать
-
 let Users = (props) => {
-    // общее число страниц = всего пользователей / кол-во пользователей на 1 стр
+    // общее число страниц = всего пользователей / кол-во пользователей на 1 стр (5)
     let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize);
 
     let pages = [];
@@ -44,23 +43,11 @@ let Users = (props) => {
                             <span>
                             <div>
                                 {user.followed
-                                    ? <button onClick={() => {
-                                        requestApi.unfollowRequest(user.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.toggleFollow(user.id)
-                                                }
-                                            });
-                                    }}>Unfollow</button>
+                                    ? <button disabled={props.usersIds.some(id => id === user.id)}
+                                              onClick={() => {props.unfollow(user.id)}}>Unfollow</button>
 
-                                    : <button onClick={() => {
-                                        requestApi.followRequest(user.id)
-                                            .then(data => {
-                                                if (data.resultCode === 0) {
-                                                    props.toggleFollow(user.id)
-                                                }
-                                            });
-                                    }}>Follow</button>}
+                                    : <button disabled={props.usersIds.some(id => id === user.id)}
+                                              onClick={() => {props.follow(user.id)}}>Follow</button>}
                             </div>
                         </span>
                         </div>

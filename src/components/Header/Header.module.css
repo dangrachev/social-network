@@ -37,6 +37,10 @@
 .loginBlock {
   transform: translateY(50%);
   float: right;
-  font-size: 18px;
-  color: #727272;
+}
+
+.loginBlock a {
+    font-size: 18px;
+    color: #727272;
+    text-decoration: none;
 }

@@ -9,6 +9,7 @@ import MessagesContainer from "./components/Messages/MessagesContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import Login from "./components/Login/Login";
 //import Footer from './components/Footer/Footer';
 
 const App = () => {
@@ -20,10 +21,11 @@ const App = () => {
                 <Switch>
                     <Route path='/profile/:userId?' render={() => <ProfileContainer />}/>
                     <Route path='/messages' render={() => <MessagesContainer />}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
                     <Route path='/feeds' render={() => <Feeds/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='/users' render={() => <UsersContainer/>}/>
+                    <Route path='/login' render={() => <Login/>}/>
                 </Switch>
             </div>
         </div>

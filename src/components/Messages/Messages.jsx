@@ -2,6 +2,7 @@ import React from "react";
 import style from './Messages.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {Redirect} from "react-router-dom";
 
 
 const Messages = (props) => {
@@ -20,6 +21,8 @@ const Messages = (props) => {
     let onSendMessageClick = () => {
         props.sendMessage();
     }
+
+    if(!props.isAuth) return <Redirect to={'/login'}/>
 
     return (
         <div className={style.messages_wrapper}>

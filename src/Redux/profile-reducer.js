@@ -1,7 +1,11 @@
+import {usersApi} from "../api/requestApi";
+
+
 // action types
 const ADD_POST = 'ADD_POST';
 const UPDATE_POST_TEXT = 'UPDATE_POST_TEXT';
 const SET_USER_PROFILE = 'SET_USERS_PROFILE';
+
 
 let initialState = {
     postsData: [
@@ -34,5 +38,12 @@ const profileReducer = (state = initialState, action) => {
 export const addPost_actionCreator = () => ({type: ADD_POST})
 export const updatePostText_actionCreator = (text) => ({type: UPDATE_POST_TEXT, newText: text})
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile})
+
+// thunk
+export const getUserProfile = (userId) => {
+    return (dispatch) => {
+        usersApi.getProfile(userId).then(data => dispatch(setUserProfile(data)));
+    }
+}
 
 export default profileReducer;
