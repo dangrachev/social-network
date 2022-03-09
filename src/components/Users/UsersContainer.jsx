@@ -29,15 +29,7 @@ class UsersContainerAPI extends React.Component {
             {
                 this.props.isFetching
                     ? <Preloader/>
-                    : <Users totalUsersCount={this.props.totalUsersCount}
-                             pageSize={this.props.pageSize}
-                             currentPage={this.props.currentPage}
-                             users={this.props.users}
-                             toggleFollow={this.props.toggleFollow}
-                             usersIds={this.props.usersIds}
-                             unfollow={this.props.unfollow}
-                             follow={this.props.follow}
-                             onPageChanged={this.onPageChanged}/>
+                    : <Users {...this.props} onPageChanged={this.onPageChanged}/>
             }
         </div>
     }
@@ -54,26 +46,6 @@ let mapStateToProps = (state) => {
     }
 }
 
-/*let mapDispatchToProps = (dispatch) => {
-    return {
-        toggleFollow: (userId) => {
-            dispatch(toggleFollowAC(userId));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users));
-        },
-        setCurrentPage: (currentPage) => {
-            dispatch(setCurrentPageAC(currentPage))
-        },
-        setTotalUsersCount: (totalCount) => {
-            dispatch(setTotalUsersCountAC(totalCount))
-        },
-        toggleFetching: (isFetching) => {
-            dispatch(toggleFetchingAC(isFetching))
-        }
-    }
-}*/
-// вместо mapDispatchToProps пихаем объект с action creators
 const UsersContainer = connect(mapStateToProps, {
     toggleFollow,
     setUsers,
