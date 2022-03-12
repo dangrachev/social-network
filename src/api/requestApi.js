@@ -22,8 +22,23 @@ export const usersApi = {
             .then(response => response.data);
     },
     getProfile(userId) {
+        console.warn('Obsolete method. Use profileApi.getProfile');
+        return profileApi.getProfile(userId)
+            .then(response => response.data);
+    }
+}
+
+export const profileApi = {
+    getProfile(userId) {
         return axiosInstance.get(`profile/${userId}`)
             .then(response => response.data);
+    },
+    getStatus(userId) {
+        return axiosInstance.get(`profile/status/${userId}`)
+            .then(response => response.data);
+    },
+    updateStatus(status) {
+        return axiosInstance.put(`profile/status/`, {status: status})
     }
 }
 

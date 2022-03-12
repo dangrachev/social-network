@@ -1,5 +1,6 @@
-import style from "./SidebarFriends.module.css";
-import {NavLink} from "react-router-dom";
+import style from './SidebarFriends.module.css';
+import {NavLink} from 'react-router-dom';
+import userPhoto from './../../../assets/img/userPhoto.jpg'
 
 
 const SidebarFriends = (props) => {
@@ -8,7 +9,7 @@ const SidebarFriends = (props) => {
 
     return (
         <div className={style.sidebarFriends}>
-            <img className={style.userAvatar} src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png" alt=""/>
+            <img className={style.userAvatar} src={userPhoto}/>
             <NavLink to={path}>{props.name}</NavLink>
         </div>
     );
