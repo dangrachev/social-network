@@ -20,7 +20,7 @@ let Users = (props) => {
         <div>
             <div className={style.paginationWrap}>
                 {pages.map(page => {
-                    return <span className={props.currentPage === page && style.currentPage}
+                    return <span key={page.id} className={props.currentPage === page && style.currentPage}
                                  onClick={() => {
                                      props.onPageChanged(page)
                                  }}>{page}</span>

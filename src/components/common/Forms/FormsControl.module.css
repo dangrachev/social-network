@@ -1,0 +1,10 @@
+.form_wrapper {}
+
+.input_wrapper .error {
+    border: 2px solid red;
+}
+
+.input_wrapper span {
+    color: red;
+    margin-left: 7px;
+}

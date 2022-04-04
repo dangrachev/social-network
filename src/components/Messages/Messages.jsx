@@ -1,8 +1,29 @@
-import React from "react";
+import React from 'react';
 import style from './Messages.module.css'
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
+import {Field, reduxForm} from 'redux-form';
+import {Textarea} from '../common/Forms/FormsControl';
+import {maxLength} from '../../utils/validator';
 
+const maxLength100 = maxLength(100);
+let TextareaReduxForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <div>
+                    <Field name={'messageBody'}
+                           component={Textarea}
+                           validate={[maxLength100]}/>
+                </div>
+                <div>
+                    <button>Send</button>
+                </div>
+            </div>
+        </form>
+    );
+}
+TextareaReduxForm = reduxForm({form: 'messageBodyForm'})(TextareaReduxForm);
 
 const Messages = (props) => {
 
@@ -10,15 +31,9 @@ const Messages = (props) => {
     let usersElements = props.messagesPage.usersData.map( user => <DialogItem id={user.id} name={user.name} key={user.id}/>);
     let messagesElements = props.messagesPage.messagesData.map( message => <Message message={message.messageText} key={message.id}/>);
 
-    // function to push textarea content into state.messagesPage.messageBody
-    let onMessageChange = (e) => {
-        let text = e.target.value;
-        props.updateMessageText(text);
-    }
 
-    // function to sending post text to the state.messagesPage.messagesData
-    let onSendMessageClick = () => {
-        props.sendMessage();
+    let addMessage = (values) => {
+        props.sendMessage(values.messageBody);
     }
 
     return (
@@ -29,11 +44,8 @@ const Messages = (props) => {
             <div className={style.messages}>
                 { messagesElements }
             </div>
-
             <div className={style.textareaWrapper}>
-                <textarea onChange={onMessageChange} value={props.messagesPage.messageBody}
-                          className={style.textarea}/>
-                <button className={style.btn_sendMessage} onClick={onSendMessageClick}>Send message</button>
+                <TextareaReduxForm onSubmit={addMessage}/>
             </div>
         </div>
     );

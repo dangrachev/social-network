@@ -28,11 +28,12 @@ const Navbar = (props) => {
             <div className={style.item}>
                 <NavLink to='/settings' activeClassName={style.active}>Settings</NavLink>
             </div>
-
-            <div className={style.friendsWrap}>
-                <h3>Friends</h3>
-                {friendsList}
-            </div>
+            {
+                props.isAuth && <div className={style.friendsWrap}>
+                    <h3>Friends</h3>
+                    {friendsList}
+                </div>
+            }
         </nav>
     );
 }

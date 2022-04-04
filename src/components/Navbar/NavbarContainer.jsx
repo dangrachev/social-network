@@ -4,7 +4,8 @@ import Navbar from "./Navbar";
 
 let mapStateToProps = (state) => {
     return {
-        sidebar: state.sidebar
+        sidebar: state.sidebar,
+        isAuth:state.auth.isAuth
     }
 }
 

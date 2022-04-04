@@ -1,0 +1,10 @@
+.error {
+    color: red;
+    margin: 10px 0 10px;
+}
+
+.rememberMe {
+    height: 30px;
+    display: flex;
+    align-items: center;
+}

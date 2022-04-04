@@ -1,6 +1,28 @@
-import React from "react";
+import React from 'react';
 import style from './Posts.module.css'
-import Post from "./Post_item/Post_item";
+import Post from './Post_item/Post_item';
+import {Field, reduxForm} from 'redux-form';
+import {Textarea} from '../../common/Forms/FormsControl';
+import {maxLength} from "../../../utils/validator";
+
+const maxLength30 = maxLength(30);
+let TextareaReduxForm = (props) => {
+    return (
+        <form onSubmit={props.handleSubmit}>
+            <div>
+                <div>
+                    <Field name={'postText'}
+                           component={Textarea}
+                           validate={[maxLength30]}/>
+                </div>
+                <div>
+                    <button>Post</button>
+                </div>
+            </div>
+        </form>
+    );
+}
+TextareaReduxForm = reduxForm({form: 'postBodyForm'})(TextareaReduxForm);
 
 
 const Posts = (props) => {
@@ -9,30 +31,15 @@ const Posts = (props) => {
                                                                       likesCount={post.likesCount}
                                                                       profile={props.profile}/>);
 
-    // ref for textarea
-    const newPostElement = React.createRef();
-
-    // function to push textarea content into state.profilePage.postText
-    let onPostChange = () => {
-        let text = newPostElement.current.value;
-        props.updatePostText(text);
-        // props.dispatch(updatePostText_actionCreator(text));
-
-    }
-
-    // function to sending post text to state.profilePage.postsData
-    let onSendPost = () => {
-        props.addPost();
-        //props.dispatch(addPost_actionCreator());
+    let onSendPost = (values) => {
+        props.addPost(values.postText);
     }
 
     return (
         <div className={style.posts_wrapper}>
             <div className={style.posts_header}>My posts</div>
             <div className={style.form_wrapper}>
-                <textarea ref={newPostElement} onChange={onPostChange} value={props.profilePage.postText}
-                          className={style.textarea}/>
-                <button className={style.btnPost} onClick={onSendPost}>Add post</button>
+                <TextareaReduxForm onSubmit={onSendPost}/>
             </div>
             <div className={style.posts}>
                 {postsElements}

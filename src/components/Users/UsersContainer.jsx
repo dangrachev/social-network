@@ -14,7 +14,7 @@ import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 
 
-class UsersContainerAPI extends React.Component {
+class UsersContainer extends React.Component {
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
@@ -46,7 +46,7 @@ let mapStateToProps = (state) => {
     }
 }
 
-const UsersContainer = connect(mapStateToProps, {
+export default connect(mapStateToProps, {
     toggleFollow,
     setUsers,
     setCurrentPage,
@@ -55,6 +55,4 @@ const UsersContainer = connect(mapStateToProps, {
     getCurrentPageUsers,
     unfollow,
     follow
-})(UsersContainerAPI);
-
-export default UsersContainer;
+})(UsersContainer);
