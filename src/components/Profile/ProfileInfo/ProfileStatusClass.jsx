@@ -2,7 +2,7 @@ import React from 'react';
 import style from './ProfileStatus.module.css';
 
 
-class ProfileStatus extends React.Component {
+class ProfileStatusClass extends React.Component {
 
     state = {
         editMode: false,
@@ -44,7 +44,7 @@ class ProfileStatus extends React.Component {
                     ? <div className={style.status}>
                         <span onDoubleClick={this.activateEditMode}>{this.props.status || 'Установить статус'}</span>
                     </div>
-                    : <div className={style.inputWrap}>
+                    : <div className={style.inputWrap} onMouseLeave={() => {this.setState({editMode: false})}}>
                         <input className={style.statusInput} onChange={this.onStatusChange}
                                autoFocus={true} value={this.state.status}/>
                         <button className={style.btn_saveStatus} onClick={this.deactivateEditMode}>Сохранить</button>
@@ -54,4 +54,4 @@ class ProfileStatus extends React.Component {
     }
 }
 
-export default ProfileStatus;
+export default ProfileStatusClass;

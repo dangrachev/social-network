@@ -43,9 +43,11 @@ let Users = (props) => {
                             <div>
                                 {user.followed
                                     ? <button disabled={props.usersIds.some(id => id === user.id)}
+                                              hidden={!props.isAuth}
                                               onClick={() => {props.unfollow(user.id)}}>Unfollow</button>
 
                                     : <button disabled={props.usersIds.some(id => id === user.id)}
+                                              hidden={!props.isAuth}
                                               onClick={() => {props.follow(user.id)}}>Follow</button>}
                             </div>
                         </span>

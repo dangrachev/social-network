@@ -4,7 +4,7 @@ import {
     setUsers,
     setCurrentPage,
     toggleFollowProgress,
-    getUsers,
+    requestUsers,
     getCurrentPageUsers,
     unfollow,
     follow
@@ -14,9 +14,10 @@ import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
 
 
+
 class UsersContainer extends React.Component {
     componentDidMount() {
-        this.props.getUsers(this.props.currentPage, this.props.pageSize);
+        this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
     // метод для получения пользователей по странично
@@ -42,7 +43,7 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        usersIds: state.usersPage.usersIds
+        usersIds: state.usersPage.usersIds,
     }
 }
 
@@ -51,7 +52,7 @@ export default connect(mapStateToProps, {
     setUsers,
     setCurrentPage,
     toggleFollowProgress,
-    getUsers,
+    requestUsers,
     getCurrentPageUsers,
     unfollow,
     follow

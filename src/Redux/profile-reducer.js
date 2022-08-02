@@ -1,4 +1,4 @@
-import {profileApi} from "../api/requestApi";
+import {profileApi} from '../api/requestApi';
 
 
 // action types
@@ -22,7 +22,7 @@ const profileReducer = (state = initialState, action) => {
             let text = action.postText
             return {
                 ...state,
-                postsData: [...state.postsData, {id: 2, message: text, likesCount: 0}]
+                postsData: [...state.postsData, {id: state.postsData.length, message: text, likesCount: 0}]
             }
         case SET_USER_PROFILE:
             return {...state, profile: action.profile}

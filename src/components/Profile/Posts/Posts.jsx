@@ -3,7 +3,7 @@ import style from './Posts.module.css'
 import Post from './Post_item/Post_item';
 import {Field, reduxForm} from 'redux-form';
 import {Textarea} from '../../common/Forms/FormsControl';
-import {maxLength} from "../../../utils/validator";
+import {maxLength} from '../../../utils/validator';
 
 const maxLength30 = maxLength(30);
 let TextareaReduxForm = (props) => {

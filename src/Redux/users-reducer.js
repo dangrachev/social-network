@@ -62,7 +62,7 @@ export const toggleFetching = (isFetching) => ({type: TOGGLE_FETCHING, isFetchin
 export const toggleFollowProgress = (isProgress, userId) => ({type: TOGGLE_FOLLOW_PROGRESS, isProgress, userId})
 
 // thunk
-export const getUsers = (currentPage, pageSize) => {
+export const requestUsers = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(toggleFetching(true)); // гифка загрузки вкл
         // запрос на получение пользователей

@@ -9,6 +9,7 @@ const Profile = (props) => {
     if(!props.profile) {
         return <Preloader />
     }
+
     return (
         <div className={style.profile_wrapper}>
             <ProfileInfo profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus}/>

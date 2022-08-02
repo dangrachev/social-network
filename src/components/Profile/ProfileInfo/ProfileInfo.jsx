@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/img/userPhoto.jpg'
-import ProfileStatus from './ProfileStatus';
+import ProfileStatusClass from './ProfileStatusClass';
 
 const ProfileInfo = (props) => {
 
@@ -12,7 +12,7 @@ const ProfileInfo = (props) => {
                     <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt="user-photo"/>
                     <div>
                         <div className={style.userName}>{props.profile.fullName}</div>
-                        <div><ProfileStatus status={props.status} updateUserStatus={props.updateUserStatus}/></div>
+                        <div><ProfileStatusClass status={props.status} updateUserStatus={props.updateUserStatus}/></div>
                     </div>
                 </div>
                 <div className={style.profile_description}>

@@ -1,6 +1,7 @@
 // action types
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+
 let initialState = {
     usersData: [
         {id: 0, name: 'Woody'},
@@ -22,7 +23,7 @@ const messagesReducer = (state = initialState, action) => {
             let body = action.messageBody;
             return {
                 ...state,
-                messagesData: [...state.messagesData, {id: 4, messageText: body}]
+                messagesData: [...state.messagesData, {id: state.messagesData.length, messageText: body}]
             }
         default:
             return state;
