@@ -1,4 +1,4 @@
-import {usersApi} from "../api/requestApi";
+import {usersApi} from '../api/requestApi';
 
 
 // action types
@@ -15,7 +15,7 @@ let initialState = {
     totalUsersCount: 0,
     currentPage: 1,
     isFetching: false,
-    usersIds: [],
+    followingUsersIds: [],
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -44,9 +44,9 @@ const usersReducer = (state = initialState, action) => {
         case TOGGLE_FOLLOW_PROGRESS:
             return {
                 ...state,
-                usersIds: action.isProgress
-                    ? [...state.usersIds, action.userId]
-                    : state.usersIds.filter(id => id !== action.userId)
+                followingUsersIds: action.isProgress
+                    ? [...state.followingUsersIds, action.userId]
+                    : state.followingUsersIds.filter(id => id !== action.userId)
             }
         default:
             return state;

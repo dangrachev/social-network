@@ -2,7 +2,6 @@ import React from 'react';
 import {
     toggleFollow,
     setUsers,
-    setCurrentPage,
     toggleFollowProgress,
     requestUsers,
     getCurrentPageUsers,
@@ -43,14 +42,14 @@ let mapStateToProps = (state) => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        usersIds: state.usersPage.usersIds,
+        followingUsersIds: state.usersPage.followingUsersIds,
+        isAuth: state.auth.isAuth
     }
 }
 
 export default connect(mapStateToProps, {
     toggleFollow,
     setUsers,
-    setCurrentPage,
     toggleFollowProgress,
     requestUsers,
     getCurrentPageUsers,

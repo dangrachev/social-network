@@ -25,9 +25,9 @@ let TextareaReduxForm = (props) => {
 TextareaReduxForm = reduxForm({form: 'postBodyForm'})(TextareaReduxForm);
 
 
-const Posts = (props) => {
+const Posts = React.memo((props) => {
     // mapping postsData into components
-    let postsElements = props.profilePage.postsData.map(post => <Post key={post.id} message={post.message}
+    let postsElements = props.postsData.map(post => <Post key={post.id} message={post.message}
                                                                       likesCount={post.likesCount}
                                                                       profile={props.profile}/>);
 
@@ -46,6 +46,6 @@ const Posts = (props) => {
             </div>
         </div>
     );
-}
+});
 
 export default Posts;

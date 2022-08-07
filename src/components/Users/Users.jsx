@@ -34,7 +34,7 @@ let Users = (props) => {
                             <div>
                                 <NavLink to={'/profile/' + user.id}>
                                     <img src={user.photos.small != null ? user.photos.small : userPhoto}
-                                         alt='user-photo'
+                                         alt='user'
                                          className={style.userPhoto}/>
                                 </NavLink>
                             </div>
@@ -42,11 +42,11 @@ let Users = (props) => {
                             <span>
                             <div>
                                 {user.followed
-                                    ? <button disabled={props.usersIds.some(id => id === user.id)}
+                                    ? <button disabled={props.followingUsersIds.some(id => id === user.id)}
                                               hidden={!props.isAuth}
                                               onClick={() => {props.unfollow(user.id)}}>Unfollow</button>
 
-                                    : <button disabled={props.usersIds.some(id => id === user.id)}
+                                    : <button disabled={props.followingUsersIds.some(id => id === user.id)}
                                               hidden={!props.isAuth}
                                               onClick={() => {props.follow(user.id)}}>Follow</button>}
                             </div>

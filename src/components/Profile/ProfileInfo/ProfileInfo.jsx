@@ -1,7 +1,7 @@
 import React from 'react';
 import style from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/img/userPhoto.jpg'
-import ProfileStatusClass from './ProfileStatusClass';
+import ProfileStatusHooks from './ProfileStatusHooks';
 
 const ProfileInfo = (props) => {
 
@@ -9,10 +9,10 @@ const ProfileInfo = (props) => {
         <div>
             <div className={style.profile_info}>
                 <div className={style.avatar_wrapper}>
-                    <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt="user-photo"/>
+                    <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
                     <div>
                         <div className={style.userName}>{props.profile.fullName}</div>
-                        <div><ProfileStatusClass status={props.status} updateUserStatus={props.updateUserStatus}/></div>
+                        <div><ProfileStatusHooks status={props.status} updateUserStatus={props.updateUserStatus}/></div>
                     </div>
                 </div>
                 <div className={style.profile_description}>
