@@ -6,7 +6,7 @@ const Post = (props) => {
     return (
         <div className={style.post_wrapper}>
             <div>
-                <img className={style.userAvatar} src={props.profile.photos.small || userPhoto} alt="userPhoto"/>
+                <img className={style.userAvatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
             </div>
             <p className={style.postText}>{props.message}</p>
             <div className={style.like_wrapper}>

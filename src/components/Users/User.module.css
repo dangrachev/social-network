@@ -15,38 +15,19 @@
     border-radius: 100px;
 }
 
-.userName {
+.user_info {
     font-size: 18px;
     margin-right: 25px;
     margin-left: 20px;
     font-weight: bold;
     text-decoration: none;
 }
-.name {
+.user_name {
     text-decoration: none;
     color: #000;
 }
 
-.userName__status {
+.user_status {
     font-size: 16px;
     color: #696969;
-}
-
-.userLocation span:first-child {
-   margin-right: 10px;
-}
-
-.paginationWrap {
-    text-align: center;
-}
-
-.paginationWrap span{
-    cursor: pointer;
-    margin: 0 5px 0;
-}
-
-.currentPage {
-    font-weight: bold;
-    font-size: 18px;
-    color: #9641ff;
 }

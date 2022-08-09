@@ -19,6 +19,7 @@ class ProfileContainer extends React.PureComponent {
         this.props.getUserStatus(this.state.userId);
     }
 
+    // насколько правильное решение ???
     async componentDidUpdate(prevProps, prevState) {
         console.log('update')
         if(prevProps.match.params.userId !== this.props.match.params.userId) {
@@ -33,7 +34,6 @@ class ProfileContainer extends React.PureComponent {
     render() {
         console.log('render')
         return <Profile {...this.props}
-                        status={this.props.status}
                         updateUserStatus={this.props.updateUserStatus}/>
     }
 }
