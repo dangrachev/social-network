@@ -53,12 +53,12 @@ let Users = (props) => {
                         </span>
                         </div>
                         <div className={style.userName}>
-                            <span>{user.name}</span>
-                            <div className={style.userName__status}><span>{user.status}</span></div>
-                        </div>
-                        <div className={style.userLocation}>
-                            <span>{'user.location.country'}</span>
-                            <span>{'user.location.city'}</span>
+                            <NavLink to={'/profile/' + user.id} className={style.name}>
+                                <span>{user.name}</span>
+                            </NavLink>
+                            <div className={style.userName__status}>
+                                <span>{user.status}</span>
+                            </div>
                         </div>
                     </div>
                 </div>)

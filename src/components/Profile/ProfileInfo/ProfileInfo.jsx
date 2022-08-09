@@ -12,7 +12,10 @@ const ProfileInfo = (props) => {
                     <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
                     <div>
                         <div className={style.userName}>{props.profile.fullName}</div>
-                        <div><ProfileStatusHooks status={props.status} updateUserStatus={props.updateUserStatus}/></div>
+                        <div>
+                            <ProfileStatusHooks status={props.status}
+                                                updateUserStatus={props.updateUserStatus}/>
+                        </div>
                     </div>
                 </div>
                 <div className={style.profile_description}>

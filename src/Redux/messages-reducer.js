@@ -1,7 +1,6 @@
 // action types
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
-
 let initialState = {
     usersData: [
         {id: 0, name: 'Woody'},

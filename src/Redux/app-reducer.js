@@ -1,6 +1,5 @@
 import {getAuthUserData} from './auth-reducer';
 
-
 // action types
 const SET_INITIALIZING = 'SET_INITIALIZING';
 
@@ -20,16 +19,15 @@ const appReducer = (state = initialState, action) => {
     }
 }
 
-
 // action creators
 export const initializedSuccess = () => ({type: SET_INITIALIZING});
 
 // thunk
-export const initializeApp = () => (dispatch) => {
-    dispatch(getAuthUserData()).then(() => {
+export const initializeApp = () => {
+    return async (dispatch) => {
+        await dispatch(getAuthUserData());
         dispatch(initializedSuccess());
-    });
+    }
 }
-
 
 export default appReducer;

@@ -22,19 +22,20 @@ const ProfileStatusHooks = (props) => {
     const onStatusChange = (e) => {
         setStatus(e.currentTarget.value);
     }
+
     return <div className={style.status_wrapper}>
-            {
-                !editMode
-                    ? <div className={style.status}>
-                        <span onDoubleClick={activateEditMode}>{props.status || 'Установить статус'}</span>
-                    </div>
-                    : <div className={style.inputWrap} onMouseLeave={() => {setEditMode(false)}}>
-                        <input className={style.statusInput} onChange={onStatusChange}
-                               autoFocus={true} value={status}/>
-                        <button className={style.btn_saveStatus} onClick={deactivateEditMode} onKe>Сохранить</button>
-                    </div>
-            }
-        </div>
+        {
+            !editMode
+                ? <div className={style.status}>
+                    <span onDoubleClick={activateEditMode}>{props.status || 'Установить статус'}</span>
+                </div>
+                : <div className={style.inputWrap} onMouseLeave={() => {setEditMode(false)}}>
+                    <input className={style.statusInput} onChange={onStatusChange}
+                           autoFocus={true} value={status}/>
+                    <button className={style.btn_saveStatus} onClick={deactivateEditMode}>Сохранить</button>
+                </div>
+        }
+    </div>
 }
 
 export default ProfileStatusHooks;

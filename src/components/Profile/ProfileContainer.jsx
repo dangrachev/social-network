@@ -7,18 +7,34 @@ import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 
-class ProfileContainer extends React.Component {
+class ProfileContainer extends React.PureComponent {
+    state = {
+        userId: this.props.match.params.userId || this.props.authorizedUserId
+    }
     componentDidMount() {
-        let userId = this.props.match.params.userId || this.props.authorizedUserId;
-        if(!userId) {
+        if(!this.state.userId) {
             this.props.history.push('/login');
         }
-        this.props.getUserProfile(userId);
-        this.props.getUserStatus(userId);
+        this.props.getUserProfile(this.state.userId);
+        this.props.getUserStatus(this.state.userId);
+    }
+
+    async componentDidUpdate(prevProps, prevState) {
+        console.log('update')
+        if(prevProps.match.params.userId !== this.props.match.params.userId) {
+            await this.setState({
+                userId: this.props.match.params.userId
+            })
+            this.props.getUserProfile(this.state.userId);
+            this.props.getUserStatus(this.state.userId);
+        }
     }
 
     render() {
-        return <Profile {...this.props} status={this.props.status} updateUserStatus={this.props.updateUserStatus}/>
+        console.log('render')
+        return <Profile {...this.props}
+                        status={this.props.status}
+                        updateUserStatus={this.props.updateUserStatus}/>
     }
 }
 
@@ -27,7 +43,7 @@ let mapStateToProps = (state) => {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
         authorizedUserId: state.auth.userId,
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
     }
 }
 

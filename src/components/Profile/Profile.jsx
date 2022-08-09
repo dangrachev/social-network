@@ -12,7 +12,8 @@ const Profile = (props) => {
 
     return (
         <div className={style.profile_wrapper}>
-            <ProfileInfo profile={props.profile} status={props.status} updateUserStatus={props.updateUserStatus}/>
+            <ProfileInfo profile={props.profile} status={props.status}
+                         updateUserStatus={props.updateUserStatus}/>
             <PostsContainer profile={props.profile}/>
         </div>
     );

@@ -17,11 +17,23 @@
 }
 
 .like_icon {
-    width: 16px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     margin: 0 3px 0 8px;
 }
 
 .like_count {
-    color: #b41414;
+    color: #000000;
+}
+
+.delete_post {
+    margin-left: 4px;
+    font-size: 19px;
+    color: rgba(180,20,20, 0.4);
+    transition: all .5s;
+    cursor: pointer;
+}
+
+.delete_post:hover {
+    color: rgb(225, 0, 0);
 }

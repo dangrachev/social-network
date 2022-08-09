@@ -1,7 +1,7 @@
 .userWrapper {
     display: flex;
     align-items: center;
-    margin-top: 40px;
+    margin: 40px 70px;
 }
 
 .user {
@@ -20,6 +20,11 @@
     margin-right: 25px;
     margin-left: 20px;
     font-weight: bold;
+    text-decoration: none;
+}
+.name {
+    text-decoration: none;
+    color: #000;
 }
 
 .userName__status {
