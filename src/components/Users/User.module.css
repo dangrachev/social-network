@@ -22,9 +22,13 @@
     font-weight: bold;
     text-decoration: none;
 }
-.user_name {
+
+.user_info a {
     text-decoration: none;
     color: #000;
+}
+
+.user_name {
 }
 
 .user_status {

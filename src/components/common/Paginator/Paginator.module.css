@@ -1,14 +1,16 @@
 .paginator_wrap {
+    height: 50px;
     text-align: center;
+    margin-top: 15px;
 }
 
 .paginator_wrap span{
     cursor: pointer;
     margin: 0 5px 0;
+    font-size: 18px;
 }
 
 .currentPage {
     font-weight: bold;
-    font-size: 18px;
     color: #9641ff;
 }
