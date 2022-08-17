@@ -1,14 +1,15 @@
 import {authApi} from '../api/requestApi';
-import {stopSubmit} from 'redux-form';
 
 // action types
 const SET_USER_DATA = 'SET_USER_DATA';
+const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE';
 
 let initialState = {
     userId: null,
     email: null,
     login: null,
     isAuth: false,
+    serverErrorMessage: ''
 }
 
 const authReducer = (state = initialState, action) => {
@@ -18,6 +19,11 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.payload
             }
+        case SET_ERROR_MESSAGE:
+            return {
+                ...state,
+                serverErrorMessage: action.message
+            }
         default:
             return state;
     }
@@ -26,6 +32,7 @@ const authReducer = (state = initialState, action) => {
 
 // action creators
 export const setAuthUserData = (userId, email, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, email, login, isAuth}});
+export const setErrorMessage = (message) => ({type: SET_ERROR_MESSAGE, message})
 
 // thunk
 export const getAuthUserData = () => {
@@ -39,7 +46,7 @@ export const getAuthUserData = () => {
     }
 }
 
-export const login = (email, password, rememberMe) => {
+export const login = ({email, password, rememberMe}) => {
     return async (dispatch) => {
         const response = await authApi.login(email, password, rememberMe);
 
@@ -47,7 +54,7 @@ export const login = (email, password, rememberMe) => {
             dispatch(getAuthUserData());
         } else if (response.data.resultCode === 1 || 10) {
             let message = response.data.messages.length ? response.data.messages[0] : 'Some error';
-            dispatch(stopSubmit('login', {_error: message}));
+            dispatch(setErrorMessage(message));
         }
     }
 }

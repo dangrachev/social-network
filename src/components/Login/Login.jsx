@@ -1,47 +1,31 @@
 import React from 'react';
-import style from './Login.module.css';
-import {Field, reduxForm} from 'redux-form';
-import {Input} from '../common/Forms/FormsControl';
-import {required} from '../../utils/validator';
 import {connect} from 'react-redux';
 import {login} from '../../Redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
+import {MainContainer} from "../common/MainContainer/MainContainer";
+import {Form} from "../common/Forms/Form";
+import {Input} from "../common/Forms/Input";
+import {PrimaryButton} from "../common/Forms/PrimaryButton";
+import {useForm} from "react-hook-form";
+import {Checkbox, FormControlLabel, Typography} from "@material-ui/core";
+import style from './Login.module.css';
 
-
-const LoginForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field placeholder={'Login'} name={'email'} component={Input} validate={[required]}/>
-            </div>
-            <div>
-                <Field placeholder={'password'} name={'password'} component={Input} validate={[required]}/>
-            </div>
-            <div className={style.rememberMe}>
-                <Field type={'checkbox'} name={'rememberMe'} component={Input} /> <span>remember me</span>
-            </div>
-            <div className={style.error}>
-                {props.error && <span>{props.error}</span>}
-            </div>
-            <div>
-                <button>Login</button>
-            </div>
-        </form>
-    );
-}
-
-const LoginReduxForm = reduxForm({form: 'login'})(LoginForm);
 
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
-        errorMessages: state.auth.errorMessages
+        serverErrorMessage: state.auth.serverErrorMessage
     }
 }
 
 const Login = (props) => {
-    const onSubmit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe);
+
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        mode: 'onBlur'
+    })
+
+    const sendLoginData = (data) => {
+        props.login(data)
     }
 
     if (props.isAuth) {
@@ -49,10 +33,47 @@ const Login = (props) => {
     }
 
     return (
-        <div>
-            <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit} errorMessages={props.errorMessages}/>
-        </div>
+        <MainContainer>
+            <Typography component={'h1'} variant={'h4'}>Login</Typography>
+            <Form onSubmit={handleSubmit(sendLoginData)}>
+                <Input {...register('email', {
+                    pattern: {
+                        value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        message: 'Email should have correct format'
+                    },
+                    required:'Email is a required field'
+                })}
+                       id='email'
+                       name='email'
+                       type='email'
+                       label='Email'
+                       error={!!errors.email}
+                       helperText={errors?.email?.message}/>
+                <Input {...register('password', {
+                    minLength: {
+                        value: 3,
+                        message: 'Password should contain at least 3 characters'
+                    },
+                    required:'Password is a required field'
+                })}
+                       id='password'
+                       name='password'
+                       type='password'
+                       label='Password'
+                       error={!!errors.password}
+                       helperText={errors?.password?.message}/>
+
+                <FormControlLabel
+                    control={<Checkbox name='rememberMe' {...register('rememberMe')} color='primary' />}
+                    label='Remember me?'/>
+
+                {props.serverErrorMessage && <div className={style.error}>
+                    <span>{props.serverErrorMessage}</span>
+                </div>}
+
+                <PrimaryButton>Sign in</PrimaryButton>
+            </Form>
+        </MainContainer>
     );
 }
 

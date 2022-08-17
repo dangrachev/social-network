@@ -12,8 +12,10 @@ const Profile = ({profile, status, updateUserStatus, updateUserPhoto, isOwner}) 
 
     return (
         <div className={style.profile_wrapper}>
-            <ProfileInfo profile={profile} status={status}
-                         updateUserStatus={updateUserStatus} updateUserPhoto={updateUserPhoto}
+            <ProfileInfo profile={profile}
+                         status={status}
+                         updateUserStatus={updateUserStatus}
+                         updateUserPhoto={updateUserPhoto}
                          isOwner={isOwner}/>
             <PostsContainer profile={profile}/>
         </div>
