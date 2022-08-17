@@ -7,9 +7,33 @@
     align-items: center;
 }
 
+.userPhoto_wrapper {
+    width: 125px;
+}
+
+.editPhoto_span {
+    font-size: 14px;
+    cursor: pointer;
+    transition: all .4s;
+}
+.editPhoto_span:after {
+    display: block;
+    width: 89px;
+    content: '';
+    border-bottom: solid 2px blueviolet;
+    transform: scaleX(0);
+    transition: transform .4s ease-in-out
+}
+.editPhoto_span:hover:after {
+    transform: scaleX(1);
+}
+.editPhoto_span:hover {
+    color: blueviolet;
+}
+
 .avatar {
-    width: 100px;
-    height: 100px;
+    max-width: 100px;
+    max-height: 100px;
     border: 1px solid black;
     border-radius: 100px;
     margin-right: 12px;

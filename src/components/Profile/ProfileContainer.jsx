@@ -2,39 +2,38 @@ import React from 'react';
 import Profile from './Profile';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getUserProfile, getUserStatus, updateUserStatus} from '../../Redux/profile-reducer';
+import {getUserProfile, getUserStatus, updateUserPhoto, updateUserStatus} from '../../Redux/profile-reducer';
 import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
 
 class ProfileContainer extends React.PureComponent {
-    state = {
-        userId: this.props.match.params.userId || this.props.authorizedUserId
-    }
-    componentDidMount() {
-        if(!this.state.userId) {
+
+    refreshProfile() {
+        let userId = this.props.match.params.userId || this.props.authorizedUserId;
+        if(!userId) {
             this.props.history.push('/login');
         }
-        this.props.getUserProfile(this.state.userId);
-        this.props.getUserStatus(this.state.userId);
+        this.props.getUserProfile(userId);
+        this.props.getUserStatus(userId);
+    }
+
+    componentDidMount() {
+        this.refreshProfile();
     }
 
     // насколько правильное решение ???
-    async componentDidUpdate(prevProps, prevState) {
-        console.log('update')
-        if(prevProps.match.params.userId !== this.props.match.params.userId) {
-            await this.setState({
-                userId: this.props.match.params.userId
-            })
-            this.props.getUserProfile(this.state.userId);
-            this.props.getUserStatus(this.state.userId);
+    componentDidUpdate(prevProps, prevState) {
+        //console.log('update')
+        if(this.props.match.params.userId !== prevProps.match.params.userId) {
+            this.refreshProfile();
         }
     }
 
     render() {
-        console.log('render')
+        //console.log('render')
         return <Profile {...this.props}
-                        updateUserStatus={this.props.updateUserStatus}/>
+                        isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}/>
     }
 }
 
@@ -49,7 +48,7 @@ let mapStateToProps = (state) => {
 
 // конвейер обработчиков
 export default compose(
-    connect(mapStateToProps,{getUserProfile, getUserStatus, updateUserStatus}),
+    connect(mapStateToProps,{getUserProfile, getUserStatus, updateUserStatus, updateUserPhoto}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer);

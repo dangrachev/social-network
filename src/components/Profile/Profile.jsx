@@ -5,7 +5,7 @@ import PostsContainer from "./Posts/PostsContainer";
 import Preloader from "../common/Preloader/Preloader";
 
 
-const Profile = ({profile, status, updateUserStatus}) => {
+const Profile = ({profile, status, updateUserStatus, updateUserPhoto, isOwner}) => {
     if(!profile) {
         return <Preloader />
     }
@@ -13,7 +13,8 @@ const Profile = ({profile, status, updateUserStatus}) => {
     return (
         <div className={style.profile_wrapper}>
             <ProfileInfo profile={profile} status={status}
-                         updateUserStatus={updateUserStatus}/>
+                         updateUserStatus={updateUserStatus} updateUserPhoto={updateUserPhoto}
+                         isOwner={isOwner}/>
             <PostsContainer profile={profile}/>
         </div>
     );
