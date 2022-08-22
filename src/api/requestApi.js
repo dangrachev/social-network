@@ -48,6 +48,9 @@ export const profileApi = {
                 'Content-type': 'multipart/form-data'
             }
         })
+    },
+    updateProfileData(profileData) {
+        return axiosInstance.put(`/profile`, profileData)
     }
 }
 

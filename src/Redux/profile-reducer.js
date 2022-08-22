@@ -83,5 +83,15 @@ export const updateUserPhoto = (photoFile) => {
     }
 }
 
+export const updateProfileData = (profileData) => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId;
+        const response = await profileApi.updateProfileData(profileData);
+
+        if (response.data.resultCode === 0) {
+            dispatch(getUserProfile(userId))
+        }
+    }
+}
 
 export default profileReducer;

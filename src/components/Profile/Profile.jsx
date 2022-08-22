@@ -5,19 +5,20 @@ import PostsContainer from "./Posts/PostsContainer";
 import Preloader from "../common/Preloader/Preloader";
 
 
-const Profile = ({profile, status, updateUserStatus, updateUserPhoto, isOwner}) => {
-    if(!profile) {
+const Profile = (props) => {
+    if(!props.profile) {
         return <Preloader />
     }
 
     return (
         <div className={style.profile_wrapper}>
-            <ProfileInfo profile={profile}
-                         status={status}
-                         updateUserStatus={updateUserStatus}
-                         updateUserPhoto={updateUserPhoto}
-                         isOwner={isOwner}/>
-            <PostsContainer profile={profile}/>
+            <ProfileInfo profile={props.profile}
+                         status={props.status}
+                         updateUserStatus={props.updateUserStatus}
+                         updateUserPhoto={props.updateUserPhoto}
+                         updateProfileData={props.updateProfileData}
+                         isOwner={props.isOwner}/>
+            <PostsContainer profile={props.profile}/>
         </div>
     );
 }

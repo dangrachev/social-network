@@ -50,6 +50,9 @@
     font-size: 18px;
 }
 
+.info_item {
+    margin-bottom: 5px;
+}
 .info_item span{
     font-weight: 400;
 }

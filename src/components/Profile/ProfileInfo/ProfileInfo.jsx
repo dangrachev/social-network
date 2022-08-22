@@ -2,24 +2,29 @@ import React, {useRef, useState} from 'react';
 import style from './ProfileInfo.module.css';
 import userPhoto from '../../../assets/img/userPhoto.jpg'
 import ProfileStatusHooks from './ProfileStatusHooks';
+import ProfileData from "./ProfileData";
+import ProfileDataForm from "./ProfileDataForm";
 
-const ProfileInfo = ({profile, status, updateUserStatus, updateUserPhoto, isOwner}) => {
+const ProfileInfo = (props) => {
 
     let [editMode, setEditMode] = useState(false);
+    let [editProfile, setEditProfile] = useState(false);
+
 
     const photoInput = useRef(null);
     const sendPhoto = () => {
         setEditMode(false);
         const photoFile = photoInput.current.files[0];
-        updateUserPhoto(photoFile);
+        props.updateUserPhoto(photoFile);
     }
 
     return(
         <div className={style.profile_info}>
             <div className={style.avatar_wrapper}>
                 <div className={style.userPhoto_wrapper}>
-                    <img className={style.avatar} src={profile.photos.small || userPhoto} alt='userPhoto'/>
-                    {isOwner && <div>
+                    <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
+
+                    {props.isOwner && <div>
                         {editMode
                             ? <form id='uploadPhoto_form' onSubmit={sendPhoto}>
                                 <input type='file' ref={photoInput} id='photo' />
@@ -30,29 +35,29 @@ const ProfileInfo = ({profile, status, updateUserStatus, updateUserPhoto, isOwne
                             }} className={style.editPhoto_span}>Upload photo</span>
                         }
                     </div>}
+
                 </div>
                 <div className={style.name_and_status}>
-                    <div className={style.userName}>{profile.fullName}</div>
+                    <div className={style.userName}>{props.profile.fullName}</div>
                     <div>
-                        <ProfileStatusHooks status={status}
-                                            updateUserStatus={updateUserStatus}
-                                            isOwner={isOwner}/>
+                        <ProfileStatusHooks status={props.status}
+                                            updateUserStatus={props.updateUserStatus}
+                                            isOwner={props.isOwner}/>
                     </div>
                 </div>
             </div>
-            <div className={style.profile_description}>
-                <ul className={style.user_info}>
-                    <li className={style.info_item}>Обо мне:
-                        <span>{profile.aboutMe}</span>
-                    </li>
-                    <li className={style.info_item}>Работа:
-                        <span>{profile.lookingForAJob
-                            ? profile.lookingForAJobDescription
-                            : null}
-                        </span>
-                    </li>
-                </ul>
-            </div>
+
+            {
+                props.isOwner && <button onClick={() => {setEditProfile(true)}}>Edit profile</button>
+            }
+
+            <ProfileData profile={props.profile}/>
+
+            {editProfile && <ProfileDataForm editProfile={editProfile}
+                                             setEditProfile={setEditProfile}
+                                             profile={props.profile}
+                                             updateProfileData={props.updateProfileData}/>}
+
         </div>
     );
 }
