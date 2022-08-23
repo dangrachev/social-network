@@ -14,7 +14,8 @@ import style from './Login.module.css';
 const mapStateToProps = (state) => {
     return {
         isAuth: state.auth.isAuth,
-        serverErrorMessage: state.auth.serverErrorMessage
+        serverErrorMessage: state.auth.serverErrorMessage,
+        captcha: state.auth.captchaURL
     }
 }
 
@@ -70,6 +71,17 @@ const Login = (props) => {
                 {props.serverErrorMessage && <div className={style.error}>
                     <span>{props.serverErrorMessage}</span>
                 </div>}
+
+                {props.captcha && <img src={props.captcha} alt="captcha"/>}
+                {props.captcha && <Input {...register('captcha', {
+                    required:'Enter symbols'
+                })}
+                                         id='captcha'
+                                         name='captcha'
+                                         type='captcha'
+                                         label='Enter the data from image'
+                                         error={!!errors.captcha}
+                                         helperText={errors?.captcha?.message}/> }
 
                 <PrimaryButton>Sign in</PrimaryButton>
             </Form>

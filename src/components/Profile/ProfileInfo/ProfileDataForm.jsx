@@ -21,7 +21,9 @@ const style = {
 
 const ProfileDataForm = (props) => {
 
-    const {register, handleSubmit} = useForm();
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        mode: 'onBlur'
+    });
 
     const sendProfileData = (profileData) => {
         props.setEditProfile(false)
@@ -72,10 +74,10 @@ const ProfileDataForm = (props) => {
                         </Typography>
                         {
                             Object.keys(props.profile.contacts).map(key => (
-                                <Input {...register('contacts.' + key)}
+                                <Input {...register(`contact.${key}`)}
                                        key={key.id}
                                        id={key.id}
-                                       name={'contacts.' + key}
+                                       name={`contact.${key}`}
                                        label={key}
                                        type='text' />))
                         }

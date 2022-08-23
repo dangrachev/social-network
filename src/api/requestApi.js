@@ -65,3 +65,9 @@ export const authApi = {
         return axiosInstance.delete(`auth/login`);
     }
 }
+
+export const securityApi = {
+    getCaptcha() {
+        return axiosInstance.get(`security/get-captcha-url`);
+    }
+}
