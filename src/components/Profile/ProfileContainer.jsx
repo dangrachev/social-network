@@ -9,6 +9,7 @@ import {
     updateUserPhoto,
     updateUserStatus
 } from '../../Redux/profile-reducer';
+import {startChatting} from "../../Redux/messages-reducer";
 import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {compose} from 'redux';
 
@@ -28,18 +29,16 @@ class ProfileContainer extends React.PureComponent {
         this.refreshProfile();
     }
 
-    // насколько правильное решение ???
     componentDidUpdate(prevProps, prevState) {
-        //console.log('update')
         if(this.props.match.params.userId !== prevProps.match.params.userId) {
             this.refreshProfile();
         }
     }
 
     render() {
-        //console.log('render')
         return <Profile {...this.props}
-                        isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}/>
+                        isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}
+                        userId={this.props.match.params.userId}/>
     }
 }
 
@@ -59,7 +58,8 @@ export default compose(
         getUserStatus,
         updateUserStatus,
         updateUserPhoto,
-        updateProfileData}),
+        updateProfileData,
+        startChatting}),
     withRouter,
     withAuthRedirect
 )(ProfileContainer);

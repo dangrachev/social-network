@@ -4,7 +4,7 @@ const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': 'b05fd2ad-b039-4e05-bbc7-dfcad75c2669'
+        'API-KEY': 'b05fd2ad-b039-4e05-bbc7-dfcad75c2669' /*'0eb49db5-9ece-4db5-99fd-2e449130c801'*/
     }
 });
 
@@ -50,7 +50,7 @@ export const profileApi = {
         })
     },
     updateProfileData(profileData) {
-        return axiosInstance.put(`/profile`, profileData)
+        return axiosInstance.put(`profile`, profileData)
     }
 }
 
@@ -63,6 +63,24 @@ export const authApi = {
     },
     logout() {
         return axiosInstance.delete(`auth/login`);
+    }
+}
+
+export const chatApi = {
+    getAllDialogs() {
+      return axiosInstance.get(`dialogs`)
+    },
+    startChatting(userId) {
+        return axiosInstance.put(`dialogs/${userId}`)
+    },
+    getMessages(userId, page, count) {
+        return axiosInstance.get(`dialogs/${userId}/messages`)
+    },
+    sendMessage(userId, body) {
+        return axiosInstance.post(`dialogs/${userId}/messages`, {body})
+    },
+    deleteMessage(messageId) {
+        return axiosInstance.delete(`dialogs/messages/${messageId}`);
     }
 }
 

@@ -59,6 +59,7 @@ export const login = ({email, password, rememberMe}) => {
         const response = await authApi.login(email, password, rememberMe);
 
         if (response.data.resultCode === 0) {
+            console.log(response)
             dispatch(getAuthUserData());
         } else if (response.data.resultCode === 1 || 10) {
             let message = response.data.messages.length ? response.data.messages[0] : 'Some error';

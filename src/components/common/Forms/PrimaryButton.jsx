@@ -12,10 +12,11 @@ export const PrimaryButton = ({children, ...props}) => {
     const styles = useStyles()
 
     return (
-        <Button type='submit'
-                className={styles.root}
-                variant='contained'
+        <Button className={styles.root}
+                type={props.type || 'submit'}
+                variant={props.variant || 'contained'}
                 color={props.color || 'primary'}
-                fullWidth={props.fullWidth || true}>{children}</Button>
+                size={props.size || 'large'}
+                fullWidth={props.fullWidth}>{children}</Button>
     )
 }

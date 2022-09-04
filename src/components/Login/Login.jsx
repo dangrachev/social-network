@@ -83,7 +83,7 @@ const Login = (props) => {
                                          error={!!errors.captcha}
                                          helperText={errors?.captcha?.message}/> }
 
-                <PrimaryButton>Sign in</PrimaryButton>
+                <PrimaryButton fullwidth={true}>Sign in</PrimaryButton>
             </Form>
         </MainContainer>
     );

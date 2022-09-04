@@ -26,7 +26,7 @@ TextareaReduxForm = reduxForm({form: 'postBodyForm'})(TextareaReduxForm);
 
 
 const Posts = React.memo((props) => {
-    // mapping postsData into components
+
     let postsElements = props.postsData.map(post => <Post key={post.id} message={post.message}
                                                           likesCount={post.likesCount} profile={props.profile}
                                                           deletePost={props.deletePost} postId={post.id}/>);

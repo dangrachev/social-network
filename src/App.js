@@ -1,22 +1,24 @@
 import React, {Suspense} from 'react';
-import {Route, Switch, withRouter} from 'react-router-dom';
-import './App.css';
+import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import HeaderContainer from './components/Header/HeaderContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
+import MessagesContainer from './components/Messages/MessagesContainer'
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import Login from './components/Login/Login';
-import Feeds from './components/Feeds/Feeds';
-import Settings from './components/Settings/Settings';
+import ChatWindowContainer from "./components/Messages/ChatWindowContainer";
 import Preloader from './components/common/Preloader/Preloader';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
 import {initializeApp} from './Redux/app-reducer';
+import './App.css';
 //import Footer from './components/Footer/Footer';
 
 
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
+//const MessagesContainer = React.lazy(() => import('./components/Messages/MessagesContainer'));
 const Music = React.lazy(() => import('./components/Music/Music'));
+const Feeds = React.lazy(() => import('./components/Feeds/Feeds'));
+const Settings = React.lazy(() => import('./components/Settings/Settings'));
 
 class App extends React.Component {
 
@@ -35,8 +37,10 @@ class App extends React.Component {
                 <div className="content_wrapper">
                     <Suspense fallback={<Preloader/>}>
                         <Switch>
+                            <Route exact path='/' render={() => <Redirect from={'/'} to={'/profile'}/>}/>
                             <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                            <Route path='/messages' render={() => <MessagesContainer/>}/>
+                            <Route exact path='/messages' render={() => <MessagesContainer/>}/>
+                            <Route exact path='/messages/:userId' render={() => <ChatWindowContainer/>}/>
                             <Route path='/users' render={() => <UsersContainer/>}/>
                             <Route path='/music' render={() => <Music/>}/>
                             <Route path='/feeds' render={() => <Feeds/>}/>
