@@ -1,7 +1,8 @@
 .post_wrapper {
-    display: flex;
-    align-items: center;
-    margin-bottom: 28px;
+
+}
+
+.postText {
 }
 
 .userAvatar {
@@ -14,26 +15,19 @@
 .like_wrapper {
     display: flex;
     align-items: center;
-}
-
-.like_icon {
-    width: 14px;
-    height: 14px;
-    margin: 0 3px 0 8px;
+    margin: 0 15px 0 10px;
 }
 
 .like_count {
-    color: #000000;
+    font-size: 18px;
+    color: #a4a4a4;
 }
 
 .delete_post {
-    margin-left: 4px;
-    font-size: 19px;
-    color: rgba(180,20,20, 0.4);
-    transition: all .5s;
     cursor: pointer;
+    transition: all 1s;
 }
 
 .delete_post:hover {
-    color: rgb(225, 0, 0);
+    color: rgb(215, 0, 0);
 }

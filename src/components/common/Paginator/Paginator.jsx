@@ -1,5 +1,9 @@
 import React, {useState} from 'react';
+import {Box} from "@mui/material";
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import style from './Paginator.module.css';
+
 
 const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10}) => {
 
@@ -18,20 +22,24 @@ const Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, porti
     let rightPortionBorder = portionNumber * portionSize;
 
     return (
-        <div className={style.paginator_wrap}>
-            {portionNumber > 1 && <button onClick={() => {setPortionNumber(portionNumber - 1)}}>Prev</button>}
+        <Box className={style.paginator_wrap} color={'text.primary'}>
+            {portionNumber > 1 && <KeyboardArrowLeftIcon sx={{cursor: 'pointer'}}
+                onClick={() => {setPortionNumber(portionNumber - 1)}}/>}
 
             {pages
                 .filter(page => page >= leftPortionBorder && page <= rightPortionBorder)
                 .map(page => <span key={page.id} className={currentPage === page && style.currentPage}
-                             onClick={() => {
-                                 onPageChanged(page)
-                             }}>{page}</span>
-            )}
+                                   onClick={() => {
+                                       onPageChanged(page)
+                                   }}>{page}</span>
+                )}
 
-            {portionCount > portionNumber && <button onClick={() => {setPortionNumber(portionNumber + 1)}}>Next</button>}
-        </div>
+            {portionCount > portionNumber && <KeyboardArrowRightIcon sx={{cursor: 'pointer'}}
+                onClick={() => {setPortionNumber(portionNumber + 1)}}/>}
+        </Box>
     );
 }
+
+/**/
 
 export default Paginator;

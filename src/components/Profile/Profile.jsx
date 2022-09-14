@@ -1,27 +1,31 @@
 import React from "react";
-import style from './Profile.module.css'
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import PostsContainer from "./Posts/PostsContainer";
 import Preloader from "../common/Preloader/Preloader";
+import {Box, Paper} from "@mui/material";
+import style from './Profile.module.css'
 
 
 const Profile = (props) => {
-    if(!props.profile) {
+
+    let profile = props.isOwner ? props.myProfile : props.userProfile;
+
+    if(!profile) {
         return <Preloader />
     }
 
+
     return (
-        <div className={style.profile_wrapper}>
-            <ProfileInfo profile={props.profile}
+        <Box component={Paper} m={'10px'} p={'20px'} borderRadius={5}>
+            <ProfileInfo profile={profile}
                          status={props.status}
                          updateUserStatus={props.updateUserStatus}
-                         updateUserPhoto={props.updateUserPhoto}
                          updateProfileData={props.updateProfileData}
                          startChatting={props.startChatting}
                          isOwner={props.isOwner}
                          userId={props.userId}/>
-            <PostsContainer profile={props.profile}/>
-        </div>
+            {props.isOwner && <PostsContainer profile={profile}/>}
+        </Box>
     );
 }
 

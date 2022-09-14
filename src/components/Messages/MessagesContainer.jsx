@@ -6,7 +6,6 @@ import DialogItem from './DialogItem/DialogItem';
 import {requestAllDialogs} from "../../Redux/messages-reducer";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import {Container} from "@material-ui/core";
 
 
 const Messages = React.memo((props) => {
@@ -18,16 +17,17 @@ const Messages = React.memo((props) => {
 
 
     return (
-        <Container>
-            <Grid container rowSpacing={3}>
+        <Box flex={6} >
+            <Grid >
                 {props.messagesPage.dialogsData.map( user => (
                     <DialogItem key={user.id}
                                 id={user.id}
                                 userName={user.userName}
-                                photos={user.photos} />)
+                                photos={user.photos} />
+                    )
                 )}
             </Grid>
-        </Container>
+        </Box>
 
 
     );

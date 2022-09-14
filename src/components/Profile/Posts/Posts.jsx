@@ -1,50 +1,50 @@
-import React from 'react';
-import style from './Posts.module.css'
+import React, {useState} from 'react';
 import Post from './Post_item/Post_item';
-import {Field, reduxForm} from 'redux-form';
-import {Textarea} from '../../common/Forms/FormsControl';
-import {maxLength} from '../../../utils/validator';
-
-const maxLength30 = maxLength(30);
-let TextareaReduxForm = (props) => {
-    return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <div>
-                    <Field name={'postText'}
-                           component={Textarea}
-                           validate={[maxLength30]}/>
-                </div>
-                <div>
-                    <button>Post</button>
-                </div>
-            </div>
-        </form>
-    );
-}
-TextareaReduxForm = reduxForm({form: 'postBodyForm'})(TextareaReduxForm);
+import {Form} from "../../common/Forms/Form";
+import {Input} from "../../common/Forms/Input";
+import {StyledButton} from "../../common/Forms/StyledButton";
+import {Box, Typography, Divider} from "@mui/material";
+import style from './Posts.module.css'
 
 
 const Posts = React.memo((props) => {
+    let [value, setValue] = useState('');
 
-    let postsElements = props.postsData.map(post => <Post key={post.id} message={post.message}
-                                                          likesCount={post.likesCount} profile={props.profile}
-                                                          deletePost={props.deletePost} postId={post.id}/>);
+    const onChange = (e) => {
+        setValue(e.currentTarget.value);
+    }
 
-    let onSendPost = (values) => {
-        props.addPost(values.postText);
+    const onSendPost = () => {
+        props.addPost(value);
+        setValue('');
     }
 
     return (
-        <div className={style.posts_wrapper}>
-            <div className={style.posts_header}>My posts</div>
+        <Box width='auto'>
+            <Divider />
+
             <div className={style.form_wrapper}>
-                <TextareaReduxForm onSubmit={onSendPost}/>
+                <Input value={value} onChange={onChange}
+                       label="What's new?"
+                       size='normal'
+                       multiline
+                       maxRows={3}
+                       fullwidth={true}
+                       sx={{marginRight: 2, width: '400px'}} />
+                <StyledButton onClick={onSendPost}
+                              size='large'>Post</StyledButton>
             </div>
+            <Typography variant='h4' sx={{margin: '40px 0 30px 0'}}>My posts</Typography>
             <div className={style.posts}>
-                {postsElements}
+                {props.postsData.length
+                    ? props.postsData.map(post => <Post key={post.id} message={post.message}
+                                                   likesCount={post.likesCount} profile={props.profile}
+                                                   deletePost={props.deletePost} postId={post.id}/>)
+                    : <Typography variant='h6' sx={{margin: '10px 0 15px 0'}}>
+                        There are no posts here yet ...</Typography>
+                }
             </div>
-        </div>
+        </Box>
     );
 });
 

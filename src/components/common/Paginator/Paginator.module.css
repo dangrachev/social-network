@@ -1,16 +1,27 @@
 .paginator_wrap {
-    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+    height: 50px;
     margin-top: 15px;
 }
 
 .paginator_wrap span{
-    cursor: pointer;
-    margin: 0 5px 0;
+    height: 25px;
+    width: 25px;
+    margin: 10px;
+    padding: 10px;
     font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all;
+}
+
+.paginator_wrap span:hover {
+    background: lightgray;
 }
 
 .currentPage {
-    font-weight: bold;
-    color: #9641ff;
+    background: #328be8;
 }

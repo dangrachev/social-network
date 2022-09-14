@@ -1,20 +1,46 @@
 import React from 'react';
+import defaultAvatar from '../../../../assets/img/defaultAvatar.png';
+import {Box, Avatar, Checkbox, Tooltip, Typography} from "@mui/material";
+import {Favorite, FavoriteBorder} from "@mui/icons-material";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from '@mui/icons-material/Delete';
+import {makeStyles} from "@mui/styles";
 import style from './Post.module.css'
-import userPhoto from '../../../../assets/img/userPhoto.jpg';
+
+
+const useStyles = makeStyles((theme) => ({
+    wrapper: {
+        width: 'auto',
+        maxWidth: 750,
+        display: 'flex',
+        marginBottom: '35px'
+    }
+}));
+
 
 const Post = (props) => {
+    const styles = useStyles();
+
     return (
-        <div className={style.post_wrapper}>
-            <div>
-                <img className={style.userAvatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
+        <Box className={styles.wrapper} sx={{alignItems: props.message.length > 40 ? 'end' : 'center'}}>
+            <div style={{display: 'flex', alignItems: props.message.length > 40 ? 'stretch' : 'center'}}>
+                <Avatar src={props.profile.photos.small || defaultAvatar} sx={{ width: 60, height: 60, marginRight: '15px'}}/>
+                <Typography variant='body' >{props.message}</Typography>
             </div>
-            <p className={style.postText}>{props.message}</p>
+
             <div className={style.like_wrapper}>
-                <img className={style.like_icon} src='https://icon-library.com/images/twitter-like-icon/twitter-like-icon-21.jpg' alt='likeIcon'/>
+                <IconButton sx={{padding: 0}}>
+                    <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color: 'red'}}/>} />
+                </IconButton>
                 <span className={style.like_count}>{props.likesCount}</span>
-                <span className={style.delete_post} onClick={() => {props.deletePost(props.postId)}}>x</span>
             </div>
-        </div>
+
+            <Tooltip title="Delete post">
+                <IconButton onClick={() => {props.deletePost(props.postId)}}>
+                    <DeleteIcon className={style.delete_post}/>
+                </IconButton>
+            </Tooltip>
+        </Box>
     );
 }
 

@@ -64,7 +64,7 @@ export const startChatting = (userId) => {
     }
 }
 
-export const getMessagesList = (userId, page = 1, count = 10) => {
+export const getMessagesList = (userId, page = 1, count = 30) => {
     return async (dispatch) => {
         const response = await chatApi.getMessages(userId, page, count);
 
@@ -82,7 +82,8 @@ export const sendMessage = (userId, body)  => {
 
         if (response.data.resultCode === 0) {
             console.log(response.data);
-            dispatch(sendMessageAction(response.data.data.message));
+            await dispatch(sendMessageAction(response.data.data.message));
+            await dispatch(getMessagesList(userId));
         }
     }
 }

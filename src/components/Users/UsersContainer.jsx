@@ -11,6 +11,7 @@ import {
 import {connect} from 'react-redux';
 import Users from './Users';
 import Preloader from '../common/Preloader/Preloader';
+import {Box} from "@mui/material";
 
 
 
@@ -25,13 +26,13 @@ class UsersContainer extends React.Component {
     }
 
     render() {
-        return <div>
+        return <Box flex={6}>
             {
                 this.props.isFetching
                     ? <Preloader/>
                     : <Users {...this.props} onPageChanged={this.onPageChanged}/>
             }
-        </div>
+        </Box>
     }
 }
 

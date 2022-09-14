@@ -1,23 +1,26 @@
 import React, {useRef, useState} from 'react';
-import style from './ProfileInfo.module.css';
-import userPhoto from '../../../assets/img/userPhoto.jpg'
+import {useHistory} from "react-router-dom";
 import ProfileStatusHooks from './ProfileStatusHooks';
 import ProfileData from "./ProfileData";
-import ProfileDataForm from "./ProfileDataForm";
-import {useHistory} from "react-router-dom";
+import defaultAvatar from '../../../assets/img/defaultAvatar.png'
+import {Avatar, Box, Divider, Typography} from "@mui/material";
+import {StyledButton} from "../../common/Forms/StyledButton";
+import {makeStyles} from "@mui/styles";
+import style from './ProfileInfo.module.css';
+
+
+
+const useStyles = makeStyles(() => ({
+    btn_sendMessage: {
+        margin: '0 0 16px',
+        padding: '10px 20px'
+    }
+}))
 
 const ProfileInfo = (props) => {
+    const styles = useStyles()
 
-    let [editMode, setEditMode] = useState(false);
-    let [editProfile, setEditProfile] = useState(false);
     let history = useHistory()
-
-    const photoInput = useRef(null);
-    const sendPhoto = () => {
-        setEditMode(false);
-        const photoFile = photoInput.current.files[0];
-        props.updateUserPhoto(photoFile);
-    }
 
     const startDialog = () => {
         props.startChatting(props.userId)
@@ -25,46 +28,31 @@ const ProfileInfo = (props) => {
     }
 
     return(
-        <div className={style.profile_info}>
+        <Box >
             <div className={style.avatar_wrapper}>
                 <div className={style.userPhoto_wrapper}>
-                    <img className={style.avatar} src={props.profile.photos.small || userPhoto} alt='userPhoto'/>
-
-                    {props.isOwner && <div>
-                        {editMode
-                            ? <form id='uploadPhoto_form' onSubmit={sendPhoto}>
-                                <input type='file' ref={photoInput} id='photo' />
-                                <input type='submit'/>
-                            </form>
-                            : <span onClick={() => {
-                                setEditMode(true)
-                            }} className={style.editPhoto_span}>Upload photo</span>
-                        }
-                    </div>}
-
+                    <Avatar sx={{width: 130, height: 130, marginRight: '20px'}}
+                            src={props.profile.photos.small || defaultAvatar}/>
                 </div>
                 <div className={style.name_and_status}>
-                    <div className={style.userName}>{props.profile.fullName}</div>
-                    <div>
-                        <ProfileStatusHooks status={props.status}
-                                            updateUserStatus={props.updateUserStatus}
-                                            isOwner={props.isOwner}/>
-                    </div>
+                    <Typography component='h3' variant='h5' >{props.profile.fullName}</Typography>
+
+                    <ProfileStatusHooks status={props.status}
+                                        updateUserStatus={props.updateUserStatus}
+                                        isOwner={props.isOwner}/>
+
                 </div>
             </div>
 
-            {!props.isOwner && <button onClick={startDialog}>Send message</button>}
+            {!props.isOwner && <StyledButton className={styles.btn_sendMessage}
+                                             size='small'
+                                             onClick={startDialog}>Send message</StyledButton>}
 
-            {props.isOwner && <button onClick={() => {setEditProfile(true)}}>Edit profile</button>}
+            <Divider/>
 
             <ProfileData profile={props.profile}/>
 
-            {editProfile && <ProfileDataForm editProfile={editProfile}
-                                             setEditProfile={setEditProfile}
-                                             profile={props.profile}
-                                             updateProfileData={props.updateProfileData}/>}
-
-        </div>
+        </Box>
     );
 }
 

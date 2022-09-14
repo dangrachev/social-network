@@ -4,6 +4,7 @@ import {profileApi} from '../api/requestApi';
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST';
 const SET_USER_PROFILE = 'SET_USERS_PROFILE';
+const SET_MY_PROFILE = 'SET_MY_PROFILE';
 const SET_STATUS = 'SET_STATUS';
 const UPDATE_PHOTO = 'UPDATE_PHOTO';
 
@@ -12,7 +13,8 @@ let initialState = {
     postsData: [
         {id: 0, message: 'WUBBA-LUBBA-DUB-DUB', likesCount: 42}
     ],
-    profile: null,
+    userProfile: null,
+    myProfile: null,
     status: ''
 
 };
@@ -20,10 +22,9 @@ let initialState = {
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_POST:
-            let text = action.postText
             return {
                 ...state,
-                postsData: [...state.postsData, {id: state.postsData.length, message: text, likesCount: 0}]
+                postsData: [...state.postsData, {id: state.postsData.length, message: action.postText, likesCount: 0}]
             }
         case DELETE_POST:
             return {
@@ -31,11 +32,13 @@ const profileReducer = (state = initialState, action) => {
                 postsData: state.postsData.filter(post => post.id !== action.postId)
             }
         case SET_USER_PROFILE:
-            return {...state, profile: action.profile}
+            return {...state, userProfile: action.profile}
+        case SET_MY_PROFILE:
+            return {...state, myProfile: action.profile}
         case SET_STATUS:
             return {...state, status: action.status}
         case UPDATE_PHOTO:
-            return {...state, profile: {...state.profile, photos: action.photos}}
+            return {...state, profile: {...state.myProfile, photos: action.photos}}
         default:
             return state;
     }
@@ -45,6 +48,7 @@ const profileReducer = (state = initialState, action) => {
 export const addPost = (postText) => ({type: ADD_POST, postText});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
+export const setMyProfile = (profile) => ({type: SET_MY_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});
 export const updatePhotoSuccess = (photos) => ({type: UPDATE_PHOTO, photos});
 
@@ -53,6 +57,13 @@ export const getUserProfile = (userId) => {
     return async (dispatch) => {
         const data = await profileApi.getProfile(userId);
         dispatch(setUserProfile(data));
+    }
+}
+
+export const getMyProfile = (userId) => {
+    return async (dispatch) => {
+        const data = await profileApi.getProfile(userId);
+        dispatch(setMyProfile(data));
     }
 }
 

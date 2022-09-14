@@ -2,31 +2,12 @@
 
 }
 
-.posts_header {
-    margin-top: 50px;
-    font-size: 18px;
-    font-weight: 500;
-}
-
 .form_wrapper {
-    margin: 15px 0 40px 0;
+    margin: 30px 0 40px 0;
+    display: flex;
+    align-items: center;
 }
 
-.btnPost {
-    width: 90px;
-    height: 40px;
-    margin-left: 18px;
-    background: #fd9e37;
-    border: 2px solid #fd9e37;
-    border-radius: 30px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.4s ease;
-}
-.btnPost:hover {
-    background-color: #fff;
-    color: #fd9e37;
-}
+.posts {
 
-.posts {}
+}

@@ -1,28 +1,37 @@
 import React from 'react';
 import Profile from './Profile';
+import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {
+    getMyProfile,
     getUserProfile,
     getUserStatus,
     updateProfileData,
-    updateUserPhoto,
     updateUserStatus
 } from '../../Redux/profile-reducer';
 import {startChatting} from "../../Redux/messages-reducer";
 import {withAuthRedirect} from '../hoc/withAuthRedirect';
-import {compose} from 'redux';
+import {Box} from "@mui/material";
 
 
 class ProfileContainer extends React.PureComponent {
 
     refreshProfile() {
         let userId = this.props.match.params.userId || this.props.authorizedUserId;
+
+        if (Number(userId) === this.props.authorizedUserId) {
+            this.props.getMyProfile(userId);
+            this.props.getUserStatus(userId);
+
+        } else {
+            this.props.getUserProfile(userId);
+            this.props.getUserStatus(userId);
+        }
+
         if(!userId) {
             this.props.history.push('/login');
         }
-        this.props.getUserProfile(userId);
-        this.props.getUserStatus(userId);
     }
 
     componentDidMount() {
@@ -36,15 +45,18 @@ class ProfileContainer extends React.PureComponent {
     }
 
     render() {
-        return <Profile {...this.props}
-                        isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}
-                        userId={this.props.match.params.userId}/>
+        return <Box bgcolor={'background.default'} color={'text.primary'} >
+            <Profile {...this.props}
+                     isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}
+                     userId={this.props.match.params.userId}/>
+        </Box>
     }
 }
 
 let mapStateToProps = (state) => {
     return {
-        profile: state.profilePage.profile,
+        userProfile: state.profilePage.userProfile,
+        myProfile: state.profilePage.myProfile,
         status: state.profilePage.status,
         authorizedUserId: state.auth.userId,
         isAuth: state.auth.isAuth,
@@ -55,9 +67,9 @@ let mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps,{
         getUserProfile,
+        getMyProfile,
         getUserStatus,
         updateUserStatus,
-        updateUserPhoto,
         updateProfileData,
         startChatting}),
     withRouter,

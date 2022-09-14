@@ -1,6 +1,6 @@
 import style from './SidebarFriends.module.css';
 import {NavLink} from 'react-router-dom';
-import userPhoto from './../../../assets/img/userPhoto.jpg'
+import defaultAvatar from './../../../assets/img/defaultAvatar.png'
 
 
 const SidebarFriends = (props) => {
@@ -9,7 +9,7 @@ const SidebarFriends = (props) => {
 
     return (
         <div className={style.sidebarFriends}>
-            <img className={style.userAvatar} src={userPhoto}/>
+            <img className={style.userAvatar} src={defaultAvatar}/>
             <NavLink to={path}>{props.name}</NavLink>
         </div>
     );

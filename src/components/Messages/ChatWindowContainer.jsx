@@ -2,25 +2,17 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {connect, useSelector} from "react-redux";
 import {NavLink, useParams} from "react-router-dom";
 import {deleteMessage, getMessagesList, sendMessage} from "../../Redux/messages-reducer";
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Divider from '@material-ui/core/Divider';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import {Button} from "@material-ui/core";
-import {Input} from "../common/Forms/Input";
-import MessageMenu from "./MessageMenu";
+import {Box, Grid, Paper, List, ListItem, ListItemText, Avatar, Divider} from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
-import Avatar from '@mui/material/Avatar';
-import {makeStyles} from '@material-ui/core/styles';
-import style from "./DialogItem/DialogItem.module.css";
-import ListItemButton from "@mui/material/ListItemButton";
-import userPhoto from "../../assets/img/userPhoto.jpg";
+import MessageMenu from "./MessageMenu";
+import {Input} from "../common/Forms/Input";
+import {StyledButton} from "../common/Forms/StyledButton";
+import {makeStyles} from "@mui/styles";
+import defaultAvatar from "../../assets/img/defaultAvatar.png";
 
 const useStyles = makeStyles((theme) => ({
     chatSection: {
-        width: '80%',
+        width: '85%',
         height: 'auto',
         display: 'flex',
         flexDirection: 'column',
@@ -28,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     messageArea: {
         display: 'flex',
         flexDirection: 'column',
-        height: '70vh',
+        height: '65vh',
         overflowY: 'auto',
         padding: '0 0 8px'
     },
@@ -39,11 +31,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'center'
-    },
-    btn: {
-        margin: theme.spacing(3,0,2),
-        padding: "10px 35px"
-    },
+    }
 }));
 
 
@@ -73,6 +61,7 @@ const ChatWindow = React.memo((props) => {
     //зависимость userId каждый раз будет изменяться при открытии очередного чата с конкретным юзером
     //если перейти на любой предыдущий ранее открытый чат, то сработает эффект и будут запрошены еще раз сообщения
     //таким образом в чате продублируются сообщения, потому что зависимость при открытии чата меняется.
+
     useEffect(() => {
         debugger;
         requestMessages();
@@ -100,7 +89,6 @@ const ChatWindow = React.memo((props) => {
     }
 
     const onDeleteMessage = (messageId, userId) => {
-        console.log(messageId)
         props.deleteMessage(messageId, userId)
     }
 
@@ -110,81 +98,81 @@ const ChatWindow = React.memo((props) => {
     }
 
     return (
-        <Grid container component={Paper} className={style.chatSection}>
-            <Grid item xs={10} style={{display: 'flex', alignItems: 'center'}}>
-                <Avatar src={userData.photos.small}
-                        style={{margin: '10px 15px', width: 50, height: 50}} />
-                <span>{userData.userName}</span>
-            </Grid>
+       <Box flex={8}>
+           <Grid container component={Paper} className={style.chatSection}>
+               <Grid item xs={10} style={{display: 'flex', alignItems: 'center'}}>
+                   <Avatar src={userData.photos.small || defaultAvatar}
+                           style={{margin: '10px 15px', width: 50, height: 50}} />
+                   <span>{userData.userName}</span>
+               </Grid>
 
-            <Divider />
+               <Divider />
 
-            <Grid item xs={12}>
-                <List className={style.messageArea} >
+               <Grid item xs={12}>
+                   <List className={style.messageArea} >
 
-                    {editMode && <MessageMenu editMode={editMode}
-                                              messageId={messageId}
-                                              userId={userId}
-                                              setEditMode={setEditMode}
-                                              closeMenu={closeMenu}
-                                              onDeleteMessage={onDeleteMessage} />}
+                       {editMode && <MessageMenu editMode={editMode}
+                                                 messageId={messageId}
+                                                 userId={userId}
+                                                 setEditMode={setEditMode}
+                                                 closeMenu={closeMenu}
+                                                 onDeleteMessage={onDeleteMessage} />}
 
-                    {props.messagesPage.messagesData.map(key => {
-                        console.log(key)
-                        return key[userId]?.map( message => {
-                        console.log(message)
-                        return <ListItem key={message.id} style={{padding: '0 0 16px'}} >
-                                <Grid container
-                                      direction="column"
-                                      alignItems={message.senderId === props.authorizedUserId
-                                          ? 'flex-end'
-                                          : 'flex-start'}
-                                      onClick={() => editMessage(message.id)}
-                                      style={{
-                                          padding: '6px',
-                                          borderRadius: '8px',
-                                          backgroundColor: editMode && messageId === message.id
-                                              ? '#e1e1e1'
-                                              : undefined
-                                }}>
+                       {props.messagesPage.messagesData.map(key => {
+                           console.log(key)
 
-                                    <Grid item xs={12}>
-                                            <ListItemText primary={message.body}/>
-                                    </Grid>
-                                    <Grid item xs={12}>
-                                        <div style={{display: 'flex', color: message.viewed ? '#0082FF' : 'gray'}}>
-                                            <ListItemText secondary={message.addedAt}/>
-                                            <DoneIcon/>
-                                        </div>
-                                    </Grid>
-                                </Grid>
-                                <div ref={messagesEndRef}/>
-                            </ListItem>
-                    })})}
-                </List>
+                           return key[userId]?.map( message => {
+                               console.log(message)
 
-                <Divider/>
+                               return <ListItem key={message.id} style={{padding: '0 0 16px'}} >
+                                   <Grid container
+                                         direction="column"
+                                         alignItems={message.senderId === props.authorizedUserId
+                                             ? 'flex-end'
+                                             : 'flex-start'}
+                                         onClick={() => editMessage(message.id)}
+                                         style={{
+                                             padding: '10px 15px',
+                                             backgroundColor: editMode && messageId === message.id
+                                                 ? '#9b9b9b'
+                                                 : undefined
+                                         }}>
 
-                <Grid container className={style.inputArea}>
-                    <Grid item xs={10} style={{padding: '20px'}}>
-                        <Input id="outlined-basic-email"
-                               label="Type Something"
-                               value={value}
-                               onChange={onChange}
-                               fullWidth
-                               multiline
-                               maxRows={3}/>
-                    </Grid>
-                    <Grid item xs={2} align="right" style={{paddingRight: '20px'}}>
-                        <Button className={style.btn}
-                                variant='contained'
-                                color='primary'
-                                fullWidth
-                                onClick={onSendMessage}>Send</Button>
-                    </Grid>
-                </Grid>
-            </Grid>
-        </Grid>
+                                       <Grid item xs={12}>
+                                           <ListItemText primary={message.body}/>
+                                       </Grid>
+                                       <Grid item xs={12}>
+                                           <div style={{display: 'flex', color: message.viewed ? '#0082FF' : 'gray'}}>
+                                               <ListItemText secondary={message.addedAt}/>
+                                               <DoneIcon/>
+                                           </div>
+                                       </Grid>
+                                   </Grid>
+                                   <div ref={messagesEndRef}/>
+                               </ListItem>
+                           })})}
+                   </List>
+
+                   <Divider/>
+
+                   <Grid container className={style.inputArea}>
+                       <Grid item xs={10} style={{padding: '20px'}}>
+                           <Input id="outlined-basic-email"
+                                  label="Your message"
+                                  value={value}
+                                  onChange={onChange}
+                                  size='large'
+                                  fullWidth={true}
+                                  multiline
+                                  maxRows={3}/>
+                       </Grid>
+                       <Grid item xs={2} align="right" style={{paddingRight: '35px'}}>
+                           <StyledButton onClick={onSendMessage}>Send</StyledButton>
+                       </Grid>
+                   </Grid>
+               </Grid>
+           </Grid>
+       </Box>
     );
 });
 

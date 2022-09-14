@@ -1,13 +1,11 @@
 import React, {useState} from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+import {Box, Paper, Modal,Typography, Button} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import {makeStyles} from '@material-ui/core/styles';
-import {Button} from "@material-ui/core";
+import {makeStyles} from '@mui/styles';
+import {StyledButton} from "../common/Forms/StyledButton";
 
 const useStyles = makeStyles((theme) => ({
     editMenu: {
@@ -19,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         alignItems: 'center',
         boxShadow: '0 6px 8px rgba(0,0,0,0.2)',
-        backgroundColor: '#fff',
+        borderRadius: 0,
         zIndex: 1
     },
     confirmModal: {
@@ -28,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
         left: '50%',
         transform: 'translate(-50%, -50%)',
         width: 400,
-        backgroundColor: '#fff',
         borderRadius: '8px',
         boxShadow: 24,
         padding: '14px',
@@ -36,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     btn: {
         margin: theme.spacing(3,0,2),
-        padding: '10px 25px',
+        padding: '12px 30px',
     }
 }));
 
@@ -51,7 +48,6 @@ const MessageMenu = React.memo((props) => {
     const closeModal = () => {
         setIsModalOpen(false);
         props.setEditMode(false)
-        console.log(isModalOpen)
     }
 
     const confirmDeleteMessage = () => {
@@ -62,7 +58,8 @@ const MessageMenu = React.memo((props) => {
 
     return (
         <>
-            {props.editMode && <div className={styles.editMenu}>
+
+            {props.editMode && <Box component={Paper} className={styles.editMenu}>
                 <Tooltip title="Delete message">
                     <IconButton onClick={openModal}>
                         <DeleteIcon />
@@ -73,27 +70,24 @@ const MessageMenu = React.memo((props) => {
                         <CloseIcon/>
                     </IconButton>
                 </Tooltip>
-            </div>}
+            </Box>}
 
             <Modal
                 open={isModalOpen}
                 onClose={closeModal}>
-                <Box className={styles.confirmModal}>
+                <Box component={Paper} className={styles.confirmModal}>
                     <Typography id="modal-modal-title" variant="h6" component="h2" >
                         Delete message?
                     </Typography>
                     <div style={{display: 'flex', justifyContent: 'space-around'}}>
-                        <Button className={styles.btn} style={{backgroundColor: '#bd0000'}}
-                                variant='contained'
-                                color='secondary'
-                                size='medium'
-                                onClick={confirmDeleteMessage}>Delete</Button>
+                        <StyledButton className={styles.btn}
+                                      color='error'
+                                      size='medium'
+                                      onClick={confirmDeleteMessage}>Delete</StyledButton>
 
-                        <Button className={styles.btn}
-                                variant='contained'
-                                color='primary'
-                                size='medium'
-                                onClick={closeModal}>Cancel</Button>
+                        <StyledButton className={styles.btn}
+                                      size='medium'
+                                      onClick={closeModal}>Cancel</StyledButton>
                     </div>
                 </Box>
             </Modal>

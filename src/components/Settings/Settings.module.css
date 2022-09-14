@@ -1,1 +1,24 @@
-.settings_wrapper {}
+.settings_wrapper {
+
+}
+
+.editFormHead {
+    display: flex;
+    text-align: center;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.themeModeBlock {
+    margin: 40px 0 10px 0;
+}
+.editAvatar {
+    margin: 40px 0 40px 0;
+
+}
+
+.themeModeBlock__switchBtn {
+    display: flex;
+    align-items: center;
+}

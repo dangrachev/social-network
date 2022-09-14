@@ -1,16 +1,12 @@
-.app_wrapper {
-  width: 1200px;
-  margin: 0 auto;
 
-  display: grid;
-  grid-template-areas:
-  'head head'
-  'nav cont';
-  grid-template-rows: 60px 1fr;
-  grid-template-columns: 2fr 10fr;
-  grid-gap: 10px;
+::-webkit-scrollbar {
+    width: 5px;
 }
 
-.content_wrapper {
-  grid-area: cont;
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgb(179, 179, 179);
 }
