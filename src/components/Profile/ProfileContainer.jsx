@@ -10,7 +10,7 @@ import {
     updateProfileData,
     updateUserStatus
 } from '../../Redux/profile-reducer';
-import {startChatting} from "../../Redux/messages-reducer";
+import {getNewMessagesCount, startChatting} from "../../Redux/messages-reducer";
 import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {Box} from "@mui/material";
 
@@ -23,6 +23,7 @@ class ProfileContainer extends React.PureComponent {
         if (Number(userId) === this.props.authorizedUserId) {
             this.props.getMyProfile(userId);
             this.props.getUserStatus(userId);
+            this.props.getNewMessagesCount();
 
         } else {
             this.props.getUserProfile(userId);
@@ -69,6 +70,7 @@ export default compose(
         getUserProfile,
         getMyProfile,
         getUserStatus,
+        getNewMessagesCount,
         updateUserStatus,
         updateProfileData,
         startChatting}),

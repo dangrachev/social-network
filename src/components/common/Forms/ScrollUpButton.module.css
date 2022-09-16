@@ -1,0 +1,15 @@
+.goTopHidden {
+    display: none;
+}
+
+.goTop {
+    display: block;
+
+
+}
+
+.scrollBtn_wrap {
+    position: fixed;
+    bottom: 80px;
+    left: 135px;
+}

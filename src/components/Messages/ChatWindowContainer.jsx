@@ -1,8 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {connect, useSelector} from "react-redux";
 import {NavLink, useParams} from "react-router-dom";
-import {deleteMessage, getMessagesList, sendMessage} from "../../Redux/messages-reducer";
-import {Box, Grid, Paper, List, ListItem, ListItemText, Avatar, Divider} from "@mui/material";
+import {deleteMessage, getMessagesList, getNewMessagesCount,
+    sendMessage, requestAllDialogs
+} from "../../Redux/messages-reducer";
+import {Box, Grid, Paper,
+    List, ListItem, ListItemText,
+    Avatar, Divider, Typography} from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import MessageMenu from "./MessageMenu";
 import {Input} from "../common/Forms/Input";
@@ -10,8 +14,10 @@ import {StyledButton} from "../common/Forms/StyledButton";
 import {makeStyles} from "@mui/styles";
 import defaultAvatar from "../../assets/img/defaultAvatar.png";
 
-const useStyles = makeStyles((theme) => ({
+
+const useStyles = makeStyles(({theme}) => ({
     chatSection: {
+        marginTop: '15px',
         width: '85%',
         height: 'auto',
         display: 'flex',
@@ -20,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
     messageArea: {
         display: 'flex',
         flexDirection: 'column',
-        height: '65vh',
+        height: '60vh',
         overflowY: 'auto',
         padding: '0 0 8px'
     },
@@ -35,26 +41,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const ChatWindow = React.memo((props) => {
+const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props}) => {
     const style = useStyles();
+
     let [value, setValue] = useState('');
     let [editMode, setEditMode] = useState(false);
     let [messageId, setMessageId] = useState('');
-    const messagesEndRef = useRef(null);
+
     let {userId} = useParams();
-
-    // объект собеседника для отображения его фото и имени в шапке диалога
-    const userData = useSelector(state => {
-        return state.messagesPage.dialogsData.find( user => user.id === Number(userId))
-    })
-
-    const requestMessages = () => {
-        props.getMessagesList(userId)
-    }
+    const messagesEndRef = useRef(null);
 
     //useEffect срабатывает при первом рендере и почему-то, если повторно перейти в чат с тем же юзером
     //хотя зависимость в виде userId не изменилась, а вот при переходе в другой чат с другим юзером
-    //эффект не срабатывает, хотя хависимость изменилась, поэтому новые данные не приходят и возвращается ошибка
+    //эффект не срабатывает, хотя зависимость изменилась, поэтому новые данные не приходят и возвращается ошибка
     //при поиске и разметке сообщений с другим юзером.
     //
     //Второй вопрос - даже если исправить первый баг, появится новая проблема:
@@ -62,14 +61,30 @@ const ChatWindow = React.memo((props) => {
     //если перейти на любой предыдущий ранее открытый чат, то сработает эффект и будут запрошены еще раз сообщения
     //таким образом в чате продублируются сообщения, потому что зависимость при открытии чата меняется.
 
+
+    // объект собеседника для отображения его фото и имени в шапке диалога
+    const userData = useSelector(state => {
+        return state.messagesPage.dialogsData.find( user => user.id === Number(userId));
+    });
+
     useEffect(() => {
-        debugger;
-        requestMessages();
-    }, [userId])
+        requestAllDialogs();
+    }, [userData]);
+
+    const requestMessages = useCallback((userId) => {
+        getMessagesList(userId);
+        getNewMessagesCount();
+    }, [getMessagesList, getNewMessagesCount])
+
+    useEffect(() => {
+        requestMessages(userId);
+    }, [requestMessages, userId]);
+
 
     useEffect(() => {
         scrollToBottom();
-    }, [props.messagesPage.messagesData])
+    }, [props.messagesPage.messagesData.length]);
+
 
     const editMessage = (messageId) => {
         setEditMode(true);
@@ -79,9 +94,9 @@ const ChatWindow = React.memo((props) => {
         setEditMode(false)
     }
 
-    const onChange = useCallback((e) => {
+    const onChange = (e) => {
         setValue(e.currentTarget.value);
-    }, [value])
+    }
 
     const onSendMessage = () => {
         props.sendMessage(userId, value);
@@ -103,7 +118,10 @@ const ChatWindow = React.memo((props) => {
                <Grid item xs={10} style={{display: 'flex', alignItems: 'center'}}>
                    <Avatar src={userData.photos.small || defaultAvatar}
                            style={{margin: '10px 15px', width: 50, height: 50}} />
-                   <span>{userData.userName}</span>
+                   <Typography component={NavLink}
+                               to={'/profile/' + userId}
+                               sx={{textDecoration: 'none', cursor: 'pointer'}}
+                               color={'text.primary'}>{userData.userName}</Typography>
                </Grid>
 
                <Divider />
@@ -119,10 +137,10 @@ const ChatWindow = React.memo((props) => {
                                                  onDeleteMessage={onDeleteMessage} />}
 
                        {props.messagesPage.messagesData.map(key => {
-                           console.log(key)
+                           //console.log(key)
 
                            return key[userId]?.map( message => {
-                               console.log(message)
+                               //console.log(message)
 
                                return <ListItem key={message.id} style={{padding: '0 0 16px'}} >
                                    <Grid container
@@ -138,8 +156,8 @@ const ChatWindow = React.memo((props) => {
                                                  : undefined
                                          }}>
 
-                                       <Grid item xs={12}>
-                                           <ListItemText primary={message.body}/>
+                                       <Grid item xs={12} sx={{whiteSpace: 'break-spaces'}}>
+                                           <ListItemText sx={{maxWidth: '500px'}} primary={message.body}/>
                                        </Grid>
                                        <Grid item xs={12}>
                                            <div style={{display: 'flex', color: message.viewed ? '#0082FF' : 'gray'}}>
@@ -185,6 +203,6 @@ const mapStateToProps = (state) => {
 
 const ChatWindowContainer = connect(
     mapStateToProps,
-    {getMessagesList, sendMessage, deleteMessage})(ChatWindow)
+    {requestAllDialogs, getMessagesList, getNewMessagesCount, sendMessage, deleteMessage})(ChatWindow)
 
 export default ChatWindowContainer;

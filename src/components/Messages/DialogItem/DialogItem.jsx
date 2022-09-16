@@ -10,7 +10,7 @@ import style from "./DialogItem.module.css";
 
 const DialogItem = (props) => {
     let path = `/messages/${props.id}`;
-    const messages = useSelector(state => state.messagesPage.messagesData)
+    //const messages = useSelector(state => state.messagesPage.messagesData)
 
     return(
         <>

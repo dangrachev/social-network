@@ -10,8 +10,10 @@ import RightSidebar from "./components/Navbar/RightSidebar";
 import Login from './components/Login/Login';
 import ChatWindowContainer from "./components/Messages/ChatWindowContainer";
 import Preloader from './components/common/Preloader/Preloader';
+import {ScrollUpButton} from "./components/common/Forms/ScrollUpButton";
 import {initializeApp} from './Redux/app-reducer';
 import {getMyProfile} from "./Redux/profile-reducer";
+import {getNewMessagesCount} from "./Redux/messages-reducer";
 import {Box, Stack, ThemeProvider} from "@mui/material";
 import {useTheme} from "./components/common/Theme/Theme";
 import './App.css';
@@ -27,10 +29,8 @@ const SettingsContainer = React.lazy(() => import('./components/Settings/Setting
 class AppContainer extends React.Component {
 
     componentDidMount() {
-
         this.props.initializeApp();
-        debugger;
-        this.props.getMyProfile(this.props.authorizedUserId);
+        this.props.getMyProfile(this.props.authorizedUserId)
     }
 
     render() {
@@ -52,23 +52,32 @@ const App = (props) => {
             <HeaderContainer />
             <Stack direction='row' spacing={2} justifyContent='space-between'>
                 {props.isAuth && <NavbarContainer/>}
+
                 <Box flex={6} p={2}>
                     <Suspense fallback={<Preloader/>}>
                         <Switch>
                             <Route exact path='/' render={() => <Redirect from={'/'} to={'/profile'}/>}/>
-                            <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                            <Route exact path='/messages' render={() => <MessagesContainer/>}/>
-                            <Route exact path='/messages/:userId' render={() => <ChatWindowContainer/>}/>
-                            <Route path='/users' render={() => <UsersContainer/>}/>
-                            <Route path='/music' render={() => <Music/>}/>
-                            <Route path='/feeds' render={() => <Feeds/>}/>
-                            <Route path='/settings' render={() => <SettingsContainer themeMode={themeMode}
-                                                                                     switchThemeMode={switchThemeMode} />}/>
+                            <Route path='/profile/:userId?'
+                                   render={() => <ProfileContainer/>}/>
+                            <Route exact path='/messages'
+                                   render={() => <MessagesContainer/>}/>
+                            <Route exact path='/messages/:userId'
+                                   render={() => <ChatWindowContainer/>}/>
+                            <Route path='/users'
+                                   render={() => <UsersContainer/>}/>
+                            <Route path='/music'
+                                   render={() => <Music/>}/>
+                            <Route path='/feeds'
+                                   render={() => <Feeds/>}/>
+                            <Route path='/settings'
+                                   render={() => <SettingsContainer themeMode={themeMode}
+                                                                    switchThemeMode={switchThemeMode}/>}/>
                             <Route path='/login' render={() => <Login/>}/>
                         </Switch>
                     </Suspense>
                 </Box>
                 {props.isAuth && <RightSidebar/>}
+
             </Stack>
         </Box>
     </ThemeProvider>
@@ -83,6 +92,6 @@ const mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {initializeApp, getMyProfile}),
+    connect(mapStateToProps, {initializeApp, getMyProfile, getNewMessagesCount}),
     withRouter
 )(AppContainer);

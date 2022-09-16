@@ -2,6 +2,7 @@ import React from 'react';
 import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Typography} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import {Favorite, FavoriteBorder, MoreVert, Share} from "@mui/icons-material";
+import postImg from './../../assets/img/feed-post_img.jpg'
 
 export const FeedPost = () => {
     return (
@@ -23,7 +24,7 @@ export const FeedPost = () => {
             <CardMedia
                 component="img"
                 height='20%'
-                image="https://adventures.com/media/3943/t-reynisfjara-black-beach-south-coast-iceland.jpg"
+                image={postImg}
                 alt="Norway"
             />
             <CardContent>

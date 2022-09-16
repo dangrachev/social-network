@@ -13,7 +13,7 @@ import style from './ProfileInfo.module.css';
 const useStyles = makeStyles(() => ({
     btn_sendMessage: {
         margin: '0 0 16px',
-        padding: '10px 20px'
+        padding: '10px 10px'
     }
 }))
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {login} from '../../Redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
@@ -6,9 +6,20 @@ import {Form} from "../common/Forms/Form";
 import {Input} from "../common/Forms/Input";
 import {StyledButton} from "../common/Forms/StyledButton";
 import {useForm} from "react-hook-form";
-import {Button, Box, Checkbox, FormControlLabel, Typography} from "@mui/material";
+import {
+    Button,
+    Box,
+    Checkbox,
+    FormControlLabel,
+    Typography,
+    FormControl,
+    InputLabel,
+    OutlinedInput, InputAdornment
+} from "@mui/material";
 import {makeStyles} from "@material-ui/core/styles";
 import style from './Login.module.css';
+import IconButton from "@mui/material/IconButton";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 
 
@@ -50,7 +61,12 @@ const mapStateToProps = (state) => {
 }
 
 const Login = (props) => {
-    const styles = useStyles()
+    const styles = useStyles();
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
     const {register, handleSubmit, formState: {errors}} = useForm({
         mode: 'onBlur'
     })
@@ -81,23 +97,34 @@ const Login = (props) => {
                        error={!!errors.email}
                        helperText={errors?.email?.message}
                        fullWidth={true}/>
-                <Input {...register('password', {
-                    minLength: {
-                        value: 3,
-                        message: 'Password should contain at least 3 characters'
-                    },
-                    required:'Password is a required field'
-                })}
-                       id='password'
-                       name='password'
-                       type='password'
-                       label='Password'
-                       error={!!errors.password}
-                       helperText={errors?.password?.message}
-                       fullWidth={true}/>
+
+                <FormControl sx={{width: '350px'}}>
+                    <Input {...register('password', {
+                        minLength: {
+                            value: 3,
+                            message: 'Password should contain at least 3 characters'
+                        },
+                        required:'Password is a required field'
+                    })}
+                           id='password'
+                           name='password'
+                           type={showPassword ? 'text' : 'password'}
+                           label='Password'
+                           error={!!errors.password}
+                           helperText={errors?.password?.message}
+                           fullWidth={true}
+                           InputProps={{ endAdornment: (<InputAdornment position="end" >
+                               <IconButton
+                                   aria-label="toggle password visibility"
+                                   onClick={handleClickShowPassword}
+                                   edge="end">
+                                   {showPassword ? <VisibilityOff /> : <Visibility />}
+                               </IconButton>
+                           </InputAdornment>)}}/>
+                </FormControl>
 
                 <FormControlLabel
-                    style={{margin: '15px auto' }}
+                    style={{margin: '0 auto' }}
                     control={<Checkbox name='rememberMe' {...register('rememberMe')} color='primary' style={{paddingRight: '10px'}}/>}
                     label='Remember me?'/>
 

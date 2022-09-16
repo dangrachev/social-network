@@ -10,11 +10,9 @@ import Box from '@mui/material/Box';
 
 const Messages = React.memo((props) => {
 
-
     useEffect(() => {
         props.requestAllDialogs()
     }, [])
-
 
     return (
         <Box flex={6} >
@@ -23,7 +21,7 @@ const Messages = React.memo((props) => {
                     <DialogItem key={user.id}
                                 id={user.id}
                                 userName={user.userName}
-                                photos={user.photos} />
+                                photos={user.photos}/>
                     )
                 )}
             </Grid>
@@ -31,8 +29,7 @@ const Messages = React.memo((props) => {
 
 
     );
-})
-
+});
 
 const mapStateToProps = (state) => {
     return {

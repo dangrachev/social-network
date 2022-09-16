@@ -6,7 +6,8 @@ let mapStateToProps = (state) => {
     return {
         sidebar: state.sidebar,
         isAuth:state.auth.isAuth,
-        authorizedUserId: state.auth.userId
+        authorizedUserId: state.auth.userId,
+        newMessagesCount: state.messagesPage.newMessagesCount
     }
 }
 

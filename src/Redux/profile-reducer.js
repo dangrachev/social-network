@@ -85,11 +85,13 @@ export const updateUserStatus = (status) => {
 }
 
 export const updateUserPhoto = (photoFile) => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId;
         const response = await profileApi.updatePhoto(photoFile);
 
         if (response.data.resultCode === 0) {
             dispatch(updatePhotoSuccess(response.data.data.photos));
+            dispatch(getMyProfile(userId));
         }
     }
 }
@@ -100,7 +102,7 @@ export const updateProfileData = (profileData) => {
         const response = await profileApi.updateProfileData(profileData);
 
         if (response.data.resultCode === 0) {
-            dispatch(getUserProfile(userId))
+            dispatch(getMyProfile(userId));
         }
     }
 }

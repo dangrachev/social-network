@@ -1,5 +1,13 @@
 import * as axios from 'axios';
 
+/*
+bunnykilljoy@mail.ru
+vekmnzirfSamurai
+
+testsocialntwrk@mail.ru
+1234567890_Test
+*/
+
 const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -7,6 +15,7 @@ const axiosInstance = axios.create({
         'API-KEY': 'b05fd2ad-b039-4e05-bbc7-dfcad75c2669' /*'0eb49db5-9ece-4db5-99fd-2e449130c801'*/
     }
 });
+
 
 export const usersApi = {
     getUsers(currentPage, pageSize) {
@@ -38,7 +47,7 @@ export const profileApi = {
             .then(response => response.data);
     },
     updateStatus(status) {
-        return axiosInstance.put(`profile/status/`, {status: status})
+        return axiosInstance.put(`profile/status/`, {status: status});
     },
     updatePhoto(photoFile) {
         const formData = new FormData();
@@ -47,10 +56,10 @@ export const profileApi = {
             headers: {
                 'Content-type': 'multipart/form-data'
             }
-        })
+        });
     },
     updateProfileData(profileData) {
-        return axiosInstance.put(`profile`, profileData)
+        return axiosInstance.put(`profile`, profileData);
     }
 }
 
@@ -68,16 +77,19 @@ export const authApi = {
 
 export const chatApi = {
     getAllDialogs() {
-      return axiosInstance.get(`dialogs`)
+      return axiosInstance.get(`dialogs`);
     },
     startChatting(userId) {
-        return axiosInstance.put(`dialogs/${userId}`)
+        return axiosInstance.put(`dialogs/${userId}`);
     },
     getMessages(userId, page, count) {
-        return axiosInstance.get(`dialogs/${userId}/messages`)
+        return axiosInstance.get(`dialogs/${userId}/messages`);
+    },
+    getNewMessagesCount() {
+        return axiosInstance.get('dialogs/messages/new/count');
     },
     sendMessage(userId, body) {
-        return axiosInstance.post(`dialogs/${userId}/messages`, {body})
+        return axiosInstance.post(`dialogs/${userId}/messages`, {body});
     },
     deleteMessage(messageId) {
         return axiosInstance.delete(`dialogs/messages/${messageId}`);
