@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import {connect, useSelector} from "react-redux";
 import {NavLink, useParams} from "react-router-dom";
 import {deleteMessage, getMessagesList, getNewMessagesCount,
@@ -41,14 +41,20 @@ const useStyles = makeStyles(({theme}) => ({
 }));
 
 
-const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props}) => {
+const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessagesCount, ...props}) => {
     const style = useStyles();
 
-    let [value, setValue] = useState('');
-    let [editMode, setEditMode] = useState(false);
-    let [messageId, setMessageId] = useState('');
-
     let {userId} = useParams();
+
+    const [value, setValue] = useState('');
+    const [editMode, setEditMode] = useState(false);
+    const [messageId, setMessageId] = useState('');
+
+    // объект собеседника для отображения его фото и имени в шапке диалога
+    const [userData, setUserData] = useState(() => {
+        return props.messagesPage.dialogsData.find(user => user.id === Number(userId));
+    });
+
     const messagesEndRef = useRef(null);
 
     //useEffect срабатывает при первом рендере и почему-то, если повторно перейти в чат с тем же юзером
@@ -62,15 +68,18 @@ const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props})
     //таким образом в чате продублируются сообщения, потому что зависимость при открытии чата меняется.
 
 
-    // объект собеседника для отображения его фото и имени в шапке диалога
-    const userData = useSelector(state => {
-        return state.messagesPage.dialogsData.find( user => user.id === Number(userId));
-    });
+    /*useLayoutEffect(() => {
+        const getUserData = async (userId) => {
+            await requestAllDialogs();
 
-    useEffect(() => {
-        requestAllDialogs();
-    }, [userData]);
+            const userData = await props.messagesPage.dialogsData.find(user => user.id === Number(userId));
+            return setUserData(userData);
+        }
 
+        getUserData(userId);
+    }, []);*/
+
+    
     const requestMessages = useCallback((userId) => {
         getMessagesList(userId);
         getNewMessagesCount();
@@ -81,7 +90,12 @@ const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props})
     }, [requestMessages, userId]);
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
+        // для автоматического скролла вниз
+        const scrollToBottom = () => {
+            messagesEndRef.current?.scrollIntoView();
+        }
+
         scrollToBottom();
     }, [props.messagesPage.messagesData.length]);
 
@@ -107,10 +121,7 @@ const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props})
         props.deleteMessage(messageId, userId)
     }
 
-    // для автоматического скролла вниз
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView();
-    }
+
 
     return (
        <Box flex={8}>
@@ -177,6 +188,7 @@ const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props})
                        <Grid item xs={10} style={{padding: '20px'}}>
                            <Input id="outlined-basic-email"
                                   label="Your message"
+                                  type='text'
                                   value={value}
                                   onChange={onChange}
                                   size='large'
@@ -197,7 +209,7 @@ const ChatWindow = React.memo(({getMessagesList, getNewMessagesCount, ...props})
 const mapStateToProps = (state) => {
     return {
         messagesPage: state.messagesPage,
-        authorizedUserId: state.auth.userId
+        authorizedUserId: state.auth.userId,
     }
 }
 

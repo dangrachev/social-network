@@ -41,7 +41,7 @@ const Settings = (props) => {
             <div className={styles.themeModeBlock}>
                 <Typography variant='h6'>Theme mode</Typography>
                 <div className={styles.themeModeBlock__switchBtn}>
-                    <Switch onChange={props.switchThemeMode} />
+                    <Switch checked={props.themeMode === 'dark' ? false : true} onChange={props.switchThemeMode} />
                     {props.themeMode === 'dark'
                         ? <ModeNightIcon color='secondary'/>
                         : <LightModeIcon color='info'/>}

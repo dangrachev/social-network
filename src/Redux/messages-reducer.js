@@ -65,7 +65,7 @@ export const viewedMessages = (viewed, userId) => ({type: VIEW_MESSAGES, viewed,
 export const requestAllDialogs = () => {
     return async (dispatch) => {
         const response = await chatApi.getAllDialogs();
-        dispatch(getAllDialogsAction(response.data));
+        await dispatch(getAllDialogsAction(response.data));
     }
 }
 
