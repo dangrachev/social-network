@@ -1,7 +1,7 @@
 import React from 'react';
+import {Box} from "@mui/material";
 import Paginator from "../common/Paginator/Paginator";
 import User from "./User";
-import {Box} from "@mui/material";
 
 const Users = (props) => {
 
@@ -10,7 +10,7 @@ const Users = (props) => {
             <Paginator totalItemsCount={props.totalUsersCount} pageSize={props.pageSize}
                        currentPage={props.currentPage} onPageChanged={props.onPageChanged}/>
             {
-                props.users.map(user => <User user={user} key={user.id}
+                props.users.map(user => <User key={user.id} user={user}
                                               follow={props.follow} unfollow={props.unfollow}
                                               followingUsersIds={props.followingUsersIds} isAuth={props.isAuth}/>)
             }

@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {Box, Paper, Typography} from "@mui/material";
+import React, {useEffect, useLayoutEffect, useState} from 'react';
+import {Box, ListItemText, Paper, Skeleton, Typography} from "@mui/material";
 import {Input} from "../../common/Forms/Input";
 import {StyledButton} from "../../common/Forms/StyledButton";
 import {makeStyles} from "@mui/styles";
@@ -38,7 +38,7 @@ const ProfileStatusHooks = (props) => {
     let [status, setStatus] = useState(props.status);
     let [editMode, setEditMode] = useState(false);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         setStatus(props.status)
     }, [props.status]);
 
@@ -61,8 +61,8 @@ const ProfileStatusHooks = (props) => {
                     {
                         !editMode
                             ? <div className={styles.statusOwner}>
-                                <Typography variant="subtitle1"
-                                            onDoubleClick={activateEditMode}>{props.status || 'Установить статус'}</Typography>
+                                <Typography variant="subtitle1" sx={{color: 'text.secondary'}}
+                                            onDoubleClick={activateEditMode}>{props.status || 'Set the status'}</Typography>
                             </div>
                             : <Box className={styles.inputWrap} onMouseLeave={() => {setEditMode(false)}}>
                                 <Input className={styles.statusInput}
@@ -77,7 +77,7 @@ const ProfileStatusHooks = (props) => {
                     }
                 </div>
                 : <div className={style.statusUser}>
-                    <span>{props.status || ''}</span>
+                    <Typography variant="subtitle1" sx={{color: 'text.secondary'}}>{props.status || ''}</Typography>
                 </div>
         }
     </div>

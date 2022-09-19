@@ -47,6 +47,9 @@ const App = (props) => {
 
     const [themeMode, switchThemeMode, themeModeOptions] = useTheme();
 
+    // console.dir(document.createElement('h1'));
+   // console.dir(React.createElement('h1'));
+
     return <ThemeProvider theme={themeModeOptions}>
         <Box minHeight="100vh" height="100%" bgcolor={'background.default'} color={'text.primary'} >
             <HeaderContainer />

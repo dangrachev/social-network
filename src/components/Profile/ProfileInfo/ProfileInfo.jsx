@@ -3,7 +3,7 @@ import {useHistory} from "react-router-dom";
 import ProfileStatusHooks from './ProfileStatusHooks';
 import ProfileData from "./ProfileData";
 import defaultAvatar from '../../../assets/img/defaultAvatar.png'
-import {Avatar, Box, Divider, Typography} from "@mui/material";
+import {Avatar, Box, Divider, Skeleton, Typography} from "@mui/material";
 import {StyledButton} from "../../common/Forms/StyledButton";
 import {makeStyles} from "@mui/styles";
 import style from './ProfileInfo.module.css';
@@ -18,24 +18,28 @@ const useStyles = makeStyles(() => ({
 }))
 
 const ProfileInfo = (props) => {
-    const styles = useStyles()
+    const styles = useStyles();
 
-    let history = useHistory()
+    let history = useHistory();
 
     const startDialog = () => {
         props.startChatting(props.userId)
-        history.push(`/messages/${props.userId}`)
+        history.push(`/messages/${props.userId}`);
     }
 
     return(
         <Box >
             <div className={style.avatar_wrapper}>
                 <div className={style.userPhoto_wrapper}>
-                    <Avatar sx={{width: 130, height: 130, marginRight: '20px'}}
-                            src={props.profile.photos.small || defaultAvatar}/>
+                    {props.profile
+                        ? <Avatar sx={{width: 130, height: 130, marginRight: '20px'}}
+                             src={props.profile?.photos?.small || defaultAvatar}/>
+                        : <Skeleton variant="circular" animation="wave" width={130} height={130} sx={{marginRight: '20px'}}/>}
                 </div>
                 <div className={style.name_and_status}>
-                    <Typography component='h3' variant='h5' >{props.profile.fullName}</Typography>
+                    {props.profile
+                        ? <Typography component='h3' variant='h5'>{props.profile?.fullName}</Typography>
+                        : <Skeleton variant="text" animation="wave" width={155} sx={{ fontSize: '2rem' }} />}
 
                     <ProfileStatusHooks status={props.status}
                                         updateUserStatus={props.updateUserStatus}

@@ -1,12 +1,14 @@
 import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import {connect, useSelector} from "react-redux";
+import {connect} from "react-redux";
 import {NavLink, useParams} from "react-router-dom";
-import {deleteMessage, getMessagesList, getNewMessagesCount,
-    sendMessage, requestAllDialogs
+import {
+    deleteMessage,
+    getMessagesList,
+    getNewMessagesCount,
+    requestAllDialogs,
+    sendMessage
 } from "../../Redux/messages-reducer";
-import {Box, Grid, Paper,
-    List, ListItem, ListItemText,
-    Avatar, Divider, Typography} from "@mui/material";
+import {Avatar, Box, Divider, Grid, List, ListItem, ListItemText, Paper, Skeleton, Typography} from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import MessageMenu from "./MessageMenu";
 import {Input} from "../common/Forms/Input";
@@ -45,6 +47,7 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
     const style = useStyles();
 
     let {userId} = useParams();
+    const messagesEndRef = useRef(null);
 
     const [value, setValue] = useState('');
     const [editMode, setEditMode] = useState(false);
@@ -52,43 +55,28 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
 
     // объект собеседника для отображения его фото и имени в шапке диалога
     const [userData, setUserData] = useState(() => {
-        return props.messagesPage.dialogsData.find(user => user.id === Number(userId));
+        if(props.messagesPage.dialogsData.length) {
+            return props.messagesPage.dialogsData.find(user => user.id === Number(userId))
+        } else return null
     });
 
-    const messagesEndRef = useRef(null);
-
-    //useEffect срабатывает при первом рендере и почему-то, если повторно перейти в чат с тем же юзером
-    //хотя зависимость в виде userId не изменилась, а вот при переходе в другой чат с другим юзером
-    //эффект не срабатывает, хотя зависимость изменилась, поэтому новые данные не приходят и возвращается ошибка
-    //при поиске и разметке сообщений с другим юзером.
-    //
-    //Второй вопрос - даже если исправить первый баг, появится новая проблема:
-    //зависимость userId каждый раз будет изменяться при открытии очередного чата с конкретным юзером
-    //если перейти на любой предыдущий ранее открытый чат, то сработает эффект и будут запрошены еще раз сообщения
-    //таким образом в чате продублируются сообщения, потому что зависимость при открытии чата меняется.
-
-
-    /*useLayoutEffect(() => {
-        const getUserData = async (userId) => {
-            await requestAllDialogs();
-
-            const userData = await props.messagesPage.dialogsData.find(user => user.id === Number(userId));
-            return setUserData(userData);
-        }
-
-        getUserData(userId);
-    }, []);*/
-
-    
     const requestMessages = useCallback((userId) => {
         getMessagesList(userId);
         getNewMessagesCount();
     }, [getMessagesList, getNewMessagesCount])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         requestMessages(userId);
-    }, [requestMessages, userId]);
+    }, [requestAllDialogs, requestMessages, userId]);
 
+    useLayoutEffect(() => {
+        // при обновлении страницы чата делаем запрос за объектами собеседников иначе будет ошибка
+        // далее вытаскиваем конкретного и отображаем его фото + имя
+        if (!userData) {
+            requestAllDialogs().then(() => setUserData(props.messagesPage.dialogsData.find(user => user.id === Number(userId))));
+        }
+
+    }, [requestAllDialogs, props.messagesPage.dialogsData]);
 
     useLayoutEffect(() => {
         // для автоматического скролла вниз
@@ -97,18 +85,9 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
         }
 
         scrollToBottom();
-    }, [props.messagesPage.messagesData.length]);
+    }, [props.messagesPage.messagesData.length, messagesEndRef.current]);
 
-
-    const editMessage = (messageId) => {
-        setEditMode(true);
-        setMessageId(messageId);
-    }
-    const closeMenu = () => {
-        setEditMode(false)
-    }
-
-    const onChange = (e) => {
+    const onInputChange = (e) => {
         setValue(e.currentTarget.value);
     }
 
@@ -117,22 +96,34 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
         setValue('');
     }
 
+    const editMessage = (messageId) => {
+        setEditMode(true);
+        setMessageId(messageId);
+    }
+
+    const closeMenu = () => {
+        setEditMode(false)
+    }
+
     const onDeleteMessage = (messageId, userId) => {
         props.deleteMessage(messageId, userId)
     }
-
-
 
     return (
        <Box flex={8}>
            <Grid container component={Paper} className={style.chatSection}>
                <Grid item xs={10} style={{display: 'flex', alignItems: 'center'}}>
-                   <Avatar src={userData.photos.small || defaultAvatar}
-                           style={{margin: '10px 15px', width: 50, height: 50}} />
-                   <Typography component={NavLink}
-                               to={'/profile/' + userId}
-                               sx={{textDecoration: 'none', cursor: 'pointer'}}
-                               color={'text.primary'}>{userData.userName}</Typography>
+                   {userData
+                       ? <Avatar src={userData?.photos?.small || defaultAvatar}
+                            style={{margin: '10px 15px', width: 50, height: 50}}/>
+                       : <Skeleton variant="circular" animation="wave" width={50} height={50} sx={{margin: '10px 15px'}}/>
+                   }
+                   {userData
+                       ? <Typography component={NavLink}
+                                to={'/profile/' + userId}
+                                sx={{textDecoration: 'none', cursor: 'pointer'}}
+                                color={'text.primary'}>{userData?.userName || ''}</Typography>
+                       : <Skeleton variant="text" animation="wave" width={155} sx={{ fontSize: '1.5rem' }} />}
                </Grid>
 
                <Divider />
@@ -177,7 +168,9 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
                                            </div>
                                        </Grid>
                                    </Grid>
+
                                    <div ref={messagesEndRef}/>
+
                                </ListItem>
                            })})}
                    </List>
@@ -190,7 +183,7 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
                                   label="Your message"
                                   type='text'
                                   value={value}
-                                  onChange={onChange}
+                                  onChange={onInputChange}
                                   size='large'
                                   fullWidth={true}
                                   multiline

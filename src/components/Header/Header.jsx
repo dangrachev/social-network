@@ -4,7 +4,7 @@ import {
     Box, AppBar, Avatar,
     styled, Toolbar, Typography,
     Menu, ListItem, ListItemButton,
-    ListItemText, List, Divider, ListItemIcon
+    ListItemText, List, Divider, ListItemIcon, Skeleton
 } from "@mui/material";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -54,8 +54,12 @@ const Header = (props) => {
                 <img className={style.logo} src="https://www.svgrepo.com/show/327388/logo-react.svg" alt="logo"/>
                 {props.isAuth && <Icons>
                     <UserBox>
-                        <Typography variant='span'>{props.myProfile?.fullName}</Typography>
-                        <Avatar sx={{width: 40, height: 40}} src={avatar || defaultAvatar}/>
+                        {props.myProfile
+                            ? <Typography variant='span'>{props.myProfile?.fullName}</Typography>
+                            : <Skeleton variant="text" animation="wave" width={73} sx={{ fontSize: '1.5rem' }} />}
+                        {props.myProfile
+                            ? <Avatar sx={{width: 40, height: 40}} src={avatar || defaultAvatar}/>
+                            : <Skeleton variant="circular" animation="wave" width={40} height={40}/>}
 
                         <KeyboardArrowDownIcon sx={{display: {md: 'block', lg: 'none'}, cursor: 'pointer'}}
                                                onClick={() => setOpen(true)}/>
