@@ -22,7 +22,6 @@ const Settings = (props) => {
         setEditMode(!editMode)
     }
 
-
     const sendPhoto = (photoFile) => {
         setEditMode(false);
         props.updateUserPhoto(photoFile);
@@ -30,10 +29,8 @@ const Settings = (props) => {
 
     const onSubmit = (data) => {
         const photoFile = data.file[0];
-        debugger;
         sendPhoto(photoFile);
     }
-
 
     return (
         <Box >
@@ -41,7 +38,7 @@ const Settings = (props) => {
             <div className={styles.themeModeBlock}>
                 <Typography variant='h6'>Theme mode</Typography>
                 <div className={styles.themeModeBlock__switchBtn}>
-                    <Switch checked={props.themeMode === 'dark' ? false : true} onChange={props.switchThemeMode} />
+                    <Switch checked={props.themeMode !== 'dark'} onChange={props.switchThemeMode} />
                     {props.themeMode === 'dark'
                         ? <ModeNightIcon color='secondary'/>
                         : <LightModeIcon color='info'/>}
@@ -81,28 +78,3 @@ const mapStateToProps = (state) => {
 const SettingsContainer = connect(mapStateToProps, {updateProfileData, updateUserPhoto})(Settings);
 
 export default SettingsContainer;
-
-
-
-
-/*
-let [editMode, setEditMode] = useState(false);
-
-const photoInput = useRef(null);
-    const sendPhoto = () => {
-        setEditMode(false);
-        const photoFile = photoInput.current.files[0];
-        props.updateUserPhoto(photoFile);
-    }
-
-{props.isOwner && <div>
-                        {editMode
-                            ? <form id='uploadPhoto_form' onSubmit={sendPhoto}>
-                                <input type='file' ref={photoInput} id='photo' />
-                                <input type='submit'/>
-                            </form>
-                            : <span onClick={() => {
-                                setEditMode(true)
-                            }} className={style.editPhoto_span}>Upload photo</span>
-                        }
-                    </div>}*/

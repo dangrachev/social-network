@@ -1,6 +1,5 @@
 import React from "react";
 import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
 import ListItemButton from "@mui/material/ListItemButton";
 import Grid from "@mui/material/Grid";
 import Avatar from '@mui/material/Avatar';
@@ -10,7 +9,6 @@ import style from "./DialogItem.module.css";
 
 const DialogItem = (props) => {
     let path = `/messages/${props.id}`;
-    //const messages = useSelector(state => state.messagesPage.messagesData)
 
     return(
         <>

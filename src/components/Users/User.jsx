@@ -3,7 +3,6 @@ import defaultAvatar from '../../assets/img/defaultAvatar.png'
 import {NavLink} from 'react-router-dom';
 import {Avatar, Box, Divider, List, ListItem, ListItemButton, ListItemText} from "@mui/material";
 import {StyledButton} from "../common/Forms/StyledButton";
-import style from './User.module.css';
 
 
 const useStyles = (() => ({

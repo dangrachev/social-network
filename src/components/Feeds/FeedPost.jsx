@@ -1,7 +1,7 @@
 import React from 'react';
-import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Typography} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import {Favorite, FavoriteBorder, MoreVert, Share} from "@mui/icons-material";
+import {Avatar, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Typography} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import {Favorite, FavoriteBorder, MoreVert, Share} from '@mui/icons-material';
 import postImg from './../../assets/img/feed-post_img.jpg'
 
 export const FeedPost = () => {
@@ -19,14 +19,12 @@ export const FeedPost = () => {
                     </IconButton>
                 }
                 title="Beautiful Norway"
-                subheader="September 14, 2021"
-            />
+                subheader="September 14, 2021"/>
             <CardMedia
                 component="img"
                 height='20%'
                 image={postImg}
-                alt="Norway"
-            />
+                alt="Norway"/>
             <CardContent>
                 <Typography variant="body1" color="text.secondary" fontSize='20px'>
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.

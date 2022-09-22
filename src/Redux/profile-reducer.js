@@ -3,6 +3,7 @@ import {profileApi} from '../api/requestApi';
 // action types
 const ADD_POST = 'ADD_POST';
 const DELETE_POST = 'DELETE_POST';
+const LIKE_POST = 'LIKE_POST';
 const SET_USER_PROFILE = 'SET_USERS_PROFILE';
 const SET_MY_PROFILE = 'SET_MY_PROFILE';
 const SET_STATUS = 'SET_STATUS';
@@ -10,9 +11,7 @@ const UPDATE_PHOTO = 'UPDATE_PHOTO';
 
 
 let initialState = {
-    postsData: [
-        {id: 0, message: 'WUBBA-LUBBA-DUB-DUB', likesCount: 42}
-    ],
+    postsData: [],
     userProfile: null,
     myProfile: null,
     status: ''
@@ -24,12 +23,29 @@ const profileReducer = (state = initialState, action) => {
         case ADD_POST:
             return {
                 ...state,
-                postsData: [...state.postsData, {id: state.postsData.length, message: action.postText, likesCount: 0}]
+                postsData: [
+                    ...state.postsData,
+                    {id: state.postsData.length, message: action.postText, isLiked: false, likesCount: 0}
+                ]
             }
         case DELETE_POST:
             return {
                 ...state,
                 postsData: state.postsData.filter(post => post.id !== action.postId)
+            }
+        case LIKE_POST:
+            return {
+                ...state,
+                postsData: state.postsData.map(post => {
+                    if (post.id === action.postId) {
+                        return {
+                            ...post,
+                            isLiked: !post.isLiked,
+                            likesCount: post.likesCount === 0 ? ++post.likesCount : --post.likesCount
+                        }
+                    }
+                    return post;
+                })
             }
         case SET_USER_PROFILE:
             return {...state, userProfile: action.profile}
@@ -47,6 +63,7 @@ const profileReducer = (state = initialState, action) => {
 // action creators
 export const addPost = (postText) => ({type: ADD_POST, postText});
 export const deletePost = (postId) => ({type: DELETE_POST, postId});
+export const likePost = (postId) => ({type: LIKE_POST, postId});
 export const setUserProfile = (profile) => ({type: SET_USER_PROFILE, profile});
 export const setMyProfile = (profile) => ({type: SET_MY_PROFILE, profile});
 export const setStatus = (status) => ({type: SET_STATUS, status});

@@ -1,7 +1,10 @@
-import React, {Suspense, useState} from 'react';
+import React, {Suspense} from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
+import {initializeApp} from './Redux/app-reducer';
+import {getMyProfile} from './Redux/profile-reducer';
+import {getNewMessagesCount} from './Redux/messages-reducer';
 import HeaderContainer from './components/Header/HeaderContainer';
 import ProfileContainer from './components/Profile/ProfileContainer';
 import MessagesContainer from './components/Messages/MessagesContainer'
@@ -10,18 +13,12 @@ import RightSidebar from "./components/Navbar/RightSidebar";
 import Login from './components/Login/Login';
 import ChatWindowContainer from "./components/Messages/ChatWindowContainer";
 import Preloader from './components/common/Preloader/Preloader';
-import {ScrollUpButton} from "./components/common/Forms/ScrollUpButton";
-import {initializeApp} from './Redux/app-reducer';
-import {getMyProfile} from "./Redux/profile-reducer";
-import {getNewMessagesCount} from "./Redux/messages-reducer";
-import {Box, Stack, ThemeProvider} from "@mui/material";
-import {useTheme} from "./components/common/Theme/Theme";
+import {Box, Stack, ThemeProvider} from '@mui/material';
+import {useTheme} from './components/common/Theme/Theme';
 import './App.css';
-//import Footer from './components/Footer/Footer';
 
 
 const UsersContainer = React.lazy(() => import('./components/Users/UsersContainer'));
-const Music = React.lazy(() => import('./components/Music/Music'));
 const Feeds = React.lazy(() => import('./components/Feeds/Feeds'));
 const SettingsContainer = React.lazy(() => import('./components/Settings/SettingsContainer'));
 
@@ -47,9 +44,6 @@ const App = (props) => {
 
     const [themeMode, switchThemeMode, themeModeOptions] = useTheme();
 
-    // console.dir(document.createElement('h1'));
-   // console.dir(React.createElement('h1'));
-
     return <ThemeProvider theme={themeModeOptions}>
         <Box minHeight="100vh" height="100%" bgcolor={'background.default'} color={'text.primary'} >
             <HeaderContainer />
@@ -68,8 +62,6 @@ const App = (props) => {
                                    render={() => <ChatWindowContainer/>}/>
                             <Route path='/users'
                                    render={() => <UsersContainer/>}/>
-                            <Route path='/music'
-                                   render={() => <Music/>}/>
                             <Route path='/feeds'
                                    render={() => <Feeds/>}/>
                             <Route path='/settings'

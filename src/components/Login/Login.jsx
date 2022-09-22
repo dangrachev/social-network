@@ -1,26 +1,16 @@
 import React, {useState} from 'react';
 import {connect} from 'react-redux';
+import {useForm} from 'react-hook-form';
 import {login} from '../../Redux/auth-reducer';
 import {Redirect} from 'react-router-dom';
-import {Form} from "../common/Forms/Form";
-import {Input} from "../common/Forms/Input";
-import {StyledButton} from "../common/Forms/StyledButton";
-import {useForm} from "react-hook-form";
-import {
-    Button,
-    Box,
-    Checkbox,
-    FormControlLabel,
-    Typography,
-    FormControl,
-    InputLabel,
-    OutlinedInput, InputAdornment
-} from "@mui/material";
-import {makeStyles} from "@material-ui/core/styles";
+import {Form} from '../common/Forms/Form';
+import {Input} from '../common/Forms/Input';
+import {StyledButton} from '../common/Forms/StyledButton';
+import {Box, Checkbox, FormControlLabel, Typography, FormControl, InputAdornment} from "@mui/material";
+import IconButton from '@mui/material/IconButton';
+import {Visibility, VisibilityOff} from '@mui/icons-material';
+import {makeStyles} from '@material-ui/core/styles';
 import style from './Login.module.css';
-import IconButton from "@mui/material/IconButton";
-import {Visibility, VisibilityOff} from "@mui/icons-material";
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -49,27 +39,19 @@ const useStyles = makeStyles((theme) => ({
         width: '120px',
         justifyContent: 'center'
     }
-}))
-
-
-const mapStateToProps = (state) => {
-    return {
-        isAuth: state.auth.isAuth,
-        serverErrorMessage: state.auth.serverErrorMessage,
-        captcha: state.auth.captchaURL
-    }
-}
+}));
 
 const Login = (props) => {
     const styles = useStyles();
-    const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => {
-        setShowPassword(!showPassword);
-    };
 
     const {register, handleSubmit, formState: {errors}} = useForm({
         mode: 'onBlur'
-    })
+    });
+
+    const [showPassword, setShowPassword] = useState(false);
+    const handleClickShowPassword = () => {
+        setShowPassword(!showPassword);
+    }
 
     const sendLoginData = (data) => {
         props.login(data)
@@ -133,22 +115,30 @@ const Login = (props) => {
                 </div>}
 
                 {props.captcha && <img src={props.captcha} alt="captcha"/>}
+
                 {props.captcha && <Input {...register('captcha', {
                     required:'Enter symbols'
-                })}
-                                         id='captcha'
-                                         name='captcha'
-                                         type='captcha'
-                                         label='Enter the data from image'
-                                         error={!!errors.captcha}
-                                         helperText={errors?.captcha?.message}/> }
+                })} id='captcha'
+                     name='captcha'
+                     type='captcha'
+                     label='Enter the data from image'
+                     error={!!errors.captcha}
+                     helperText={errors?.captcha?.message}/> }
 
                 <StyledButton type='submit'
                               variant='outlined'
-                              color='secondary' className={styles.btn_login} >Sign in</StyledButton>
+                              color='secondary' className={styles.btn_login}>Sign in</StyledButton>
             </Form>
         </Box>
     );
+}
+
+const mapStateToProps = (state) => {
+    return {
+        isAuth: state.auth.isAuth,
+        serverErrorMessage: state.auth.serverErrorMessage,
+        captcha: state.auth.captchaURL
+    }
 }
 
 export default connect(mapStateToProps, {login})(Login);

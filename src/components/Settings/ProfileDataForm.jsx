@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Box, Checkbox, FormControlLabel, Typography, Button, Paper} from '@mui/material';
+import {Box, Checkbox, FormControlLabel, Typography, Paper} from '@mui/material';
 import {Input} from "../common/Forms/Input";
 import {useForm} from "react-hook-form";
 import {Form} from "../common/Forms/Form";

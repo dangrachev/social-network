@@ -1,13 +1,8 @@
-import React, {useCallback, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useCallback, useLayoutEffect, useRef, useState} from 'react';
 import {connect} from "react-redux";
 import {NavLink, useParams} from "react-router-dom";
-import {
-    deleteMessage,
-    getMessagesList,
-    getNewMessagesCount,
-    requestAllDialogs,
-    sendMessage
-} from "../../Redux/messages-reducer";
+import {deleteMessage, getMessagesList, getNewMessagesCount,
+    requestAllDialogs, sendMessage} from "../../Redux/messages-reducer";
 import {Avatar, Box, Divider, Grid, List, ListItem, ListItemText, Paper, Skeleton, Typography} from "@mui/material";
 import DoneIcon from '@mui/icons-material/Done';
 import MessageMenu from "./MessageMenu";
@@ -20,7 +15,7 @@ import defaultAvatar from "../../assets/img/defaultAvatar.png";
 const useStyles = makeStyles(({theme}) => ({
     chatSection: {
         marginTop: '15px',
-        width: '85%',
+        width: '90%',
         height: 'auto',
         display: 'flex',
         flexDirection: 'column',
@@ -73,7 +68,9 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
         // при обновлении страницы чата делаем запрос за объектами собеседников иначе будет ошибка
         // далее вытаскиваем конкретного и отображаем его фото + имя
         if (!userData) {
-            requestAllDialogs().then(() => setUserData(props.messagesPage.dialogsData.find(user => user.id === Number(userId))));
+            requestAllDialogs()
+                .then(() => setUserData(props.messagesPage.dialogsData
+                    .find(user => user.id === Number(userId))));
         }
 
     }, [requestAllDialogs, props.messagesPage.dialogsData]);
@@ -116,14 +113,16 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
                    {userData
                        ? <Avatar src={userData?.photos?.small || defaultAvatar}
                             style={{margin: '10px 15px', width: 50, height: 50}}/>
-                       : <Skeleton variant="circular" animation="wave" width={50} height={50} sx={{margin: '10px 15px'}}/>
+                       : <Skeleton variant='circular' animation='wave'
+                                   width={50} height={50} sx={{margin: '10px 15px'}}/>
                    }
                    {userData
                        ? <Typography component={NavLink}
                                 to={'/profile/' + userId}
                                 sx={{textDecoration: 'none', cursor: 'pointer'}}
                                 color={'text.primary'}>{userData?.userName || ''}</Typography>
-                       : <Skeleton variant="text" animation="wave" width={155} sx={{ fontSize: '1.5rem' }} />}
+                       : <Skeleton variant='text' animation='wave'
+                                   width={155} sx={{ fontSize: '1.5rem' }} />}
                </Grid>
 
                <Divider />
@@ -138,13 +137,10 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
                                                  closeMenu={closeMenu}
                                                  onDeleteMessage={onDeleteMessage} />}
 
-                       {props.messagesPage.messagesData.map(key => {
-                           //console.log(key)
-
-                           return key[userId]?.map( message => {
-                               //console.log(message)
-
-                               return <ListItem key={message.id} style={{padding: '0 0 16px'}} >
+                       {props.messagesPage.messagesData.map(key => key[userId]?.map( message => {
+                           // выбераем объект с сообщениями, подходящий по ключу userId,
+                           // у которого в значении массив с сообщениями и достаем их
+                           return <ListItem key={message.id} style={{padding: '0 0 16px'}} >
                                    <Grid container
                                          direction="column"
                                          alignItems={message.senderId === props.authorizedUserId
@@ -163,7 +159,11 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
                                        </Grid>
                                        <Grid item xs={12}>
                                            <div style={{display: 'flex', color: message.viewed ? '#0082FF' : 'gray'}}>
-                                               <ListItemText secondary={message.addedAt}/>
+                                               <ListItemText sx={{marginRight: 1}}
+                                                             secondary={new Date(message.addedAt)
+                                                                 .toISOString().substring(0, 10)}/>
+                                               <ListItemText secondary={new Date(message.addedAt)
+                                                   .toISOString().substring(11, 16)}/>
                                                <DoneIcon/>
                                            </div>
                                        </Grid>
@@ -171,8 +171,7 @@ const ChatWindow = React.memo(({requestAllDialogs, getMessagesList, getNewMessag
 
                                    <div ref={messagesEndRef}/>
 
-                               </ListItem>
-                           })})}
+                               </ListItem>}))}
                    </List>
 
                    <Divider/>
@@ -208,6 +207,7 @@ const mapStateToProps = (state) => {
 
 const ChatWindowContainer = connect(
     mapStateToProps,
-    {requestAllDialogs, getMessagesList, getNewMessagesCount, sendMessage, deleteMessage})(ChatWindow)
+    {requestAllDialogs, getMessagesList,
+        getNewMessagesCount, sendMessage, deleteMessage})(ChatWindow)
 
 export default ChatWindowContainer;

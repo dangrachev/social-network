@@ -24,13 +24,15 @@ const Post = (props) => {
     return (
         <Box className={styles.wrapper} sx={{alignItems: props.message.length > 40 ? 'end' : 'center'}}>
             <div style={{display: 'flex', alignItems: props.message.length > 40 ? 'stretch' : 'center'}}>
-                <Avatar src={props.profile.photos.small || defaultAvatar} sx={{ width: 60, height: 60, marginRight: '15px'}}/>
+                <Avatar src={props.profileAvatar || defaultAvatar} sx={{ width: 60, height: 60, marginRight: '15px'}}/>
                 <Typography variant='body' >{props.message}</Typography>
             </div>
 
             <div className={style.like_wrapper}>
-                <IconButton sx={{padding: 0}}>
-                    <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color: 'red'}}/>} />
+                <IconButton sx={{padding: 0}} onClick={() => props.likePost(props.postId)}>
+                    <Checkbox icon={<FavoriteBorder />}
+                              checked={props.isLiked}
+                              checkedIcon={<Favorite sx={{color: 'red'}}/>}/>
                 </IconButton>
                 <span className={style.like_count}>{props.likesCount}</span>
             </div>

@@ -1,47 +1,39 @@
 import React from 'react';
-import {
-    Avatar,
-    AvatarGroup,
-    Box, IconButton,
-    ImageList,
-    ImageListItem,
-    ImageListItemBar,
-    ListSubheader,
-    Typography
-} from "@mui/material";
+import {Avatar, AvatarGroup, Box, IconButton, ImageList,
+    ImageListItem, ImageListItemBar, ListSubheader, Typography} from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 
 const RightSidebar = () => {
 
     return (
-        <Box flex={3} p={2} sx={{display: {xs: 'none', sm: 'block'}}}>
-            <Box position='fixed' sx={{width: 300}}>
+        <Box flex={3} p={2}
+             sx={{display: {xs: 'none', sm: 'none', md: 'none', lg: 'block'}, maxWidth: 480, minWidth: 'auto'}}>
+            <Box position='fixed' sx={{marginRight: 2}}>
                 <Typography variant='h6' mb={2}>Online friends</Typography>
-                <AvatarGroup max={7}>
-                    <Avatar title='Remy Sharp' alt='Remy Sharp' src="https://material-ui.com/static/images/avatar/1.jpg" />
-                    <Avatar title='Travis Howard' alt='Travis Howard' src="https://material-ui.com/static/images/avatar/2.jpg" />
-                    <Avatar title='John Wallberg' alt='John Wallberg' src="" />
-                    <Avatar title='Alice King' alt='Alice King' src="https://material-ui.com/static/images/avatar/3.jpg" />
-                    <Avatar title='Agnes Walker' alt='Agnes Walker' src="https://material-ui.com/static/images/avatar/4.jpg" />
-                    <Avatar title='Trevor Philips' alt='Trevor Philips' src="https://material-ui.com/static/images/avatar/6.jpg" />
-                    <Avatar title='Anna Akolla' alt='Anna Akolla' src="https://material-ui.com/static/images/avatar/7.jpg" />
-                    <Avatar title='Damon Sanchez' alt='Damon Sanchez' src="https://material-ui.com/static/images/avatar/8.jpg" />
-                    <Avatar title='Mary Watcher' alt='Mary Watcher' src="https://material-ui.com/static/images/avatar/9.jpg" />
+                <AvatarGroup max={7} sx={{marginRight: 26}}>
+                    <Avatar title='Remy Sharp' alt='Remy Sharp' src='https://material-ui.com/static/images/avatar/1.jpg' />
+                    <Avatar title='Travis Howard' alt='Travis Howard' src='https://material-ui.com/static/images/avatar/2.jpg' />
+                    <Avatar title='John Wallberg' alt='John Wallberg' src='' />
+                    <Avatar title='Alice King' alt='Alice King' src='https://material-ui.com/static/images/avatar/3.jpg' />
+                    <Avatar title='Agnes Walker' alt='Agnes Walker' src='https://material-ui.com/static/images/avatar/4.jpg' />
+                    <Avatar title='Trevor Philips' alt='Trevor Philips' src='https://material-ui.com/static/images/avatar/6.jpg' />
+                    <Avatar title='Anna Akolla' alt='Anna Akolla' src='https://material-ui.com/static/images/avatar/7.jpg' />
+                    <Avatar title='Damon Sanchez' alt='Damon Sanchez' src='https://material-ui.com/static/images/avatar/8.jpg' />
+                    <Avatar title='Mary Watcher' alt='Mary Watcher' src='https://material-ui.com/static/images/avatar/9.jpg' />
                 </AvatarGroup>
-                <Box mt={5}>
-                    <ImageList sx={{width: 480, height: 700}} gap={5}>
-                        <ImageListItem key="Subheader" cols={2}>
+                <Box mt={5} sx={{width: 'auto'}}>
+                    <ImageList sx={{maxWidth: '100%', minWidth: 'auto', height: 700}} gap={5}>
+                        <ImageListItem key='Subheader' cols={2}>
                             <Typography variant='h6' >Last photos</Typography>
-                            <ListSubheader component="div">September</ListSubheader>
+                            <ListSubheader component='div'>September</ListSubheader>
                         </ImageListItem>
                         {itemData.map((item) => (
                             <ImageListItem key={item.img}>
-                                <img
-                                    src={`${item.img}?w=248&fit=crop&auto=format`}
-                                    srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={item.title}
-                                    loading="lazy"/>
+                                <img src={`${item.img}?w=248&fit=crop&auto=format`}
+                                     srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                                     alt={item.title}
+                                     loading='lazy'/>
                                 <ImageListItemBar
                                     title={item.title}
                                     subtitle={item.author}
@@ -51,7 +43,7 @@ const RightSidebar = () => {
                                             aria-label={`info about ${item.title}`}>
                                             <InfoIcon />
                                         </IconButton>
-                                    }/>
+                                }/>
                             </ImageListItem>
                         ))}
                     </ImageList>
@@ -60,7 +52,6 @@ const RightSidebar = () => {
         </Box>
     );
 };
-
 
 const itemData = [
     {

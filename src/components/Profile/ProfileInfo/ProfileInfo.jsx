@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React from 'react';
 import {useHistory} from "react-router-dom";
 import ProfileStatusHooks from './ProfileStatusHooks';
 import ProfileData from "./ProfileData";
@@ -7,7 +7,6 @@ import {Avatar, Box, Divider, Skeleton, Typography} from "@mui/material";
 import {StyledButton} from "../../common/Forms/StyledButton";
 import {makeStyles} from "@mui/styles";
 import style from './ProfileInfo.module.css';
-
 
 
 const useStyles = makeStyles(() => ({

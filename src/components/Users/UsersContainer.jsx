@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-    toggleFollow,
-    setUsers,
-    toggleFollowProgress,
-    requestUsers,
-    getCurrentPageUsers,
-    unfollow,
-    follow
-} from '../../Redux/users-reducer';
 import {connect} from 'react-redux';
-import Users from './Users';
-import Preloader from '../common/Preloader/Preloader';
+import {
+    toggleFollow, setUsers, toggleFollowProgress,
+    requestUsers, getCurrentPageUsers, unfollow, follow
+} from '../../Redux/users-reducer';
 import {Box} from "@mui/material";
-
+import Preloader from '../common/Preloader/Preloader';
+import Users from './Users';
 
 
 class UsersContainer extends React.Component {
@@ -49,11 +43,6 @@ let mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, {
-    toggleFollow,
-    setUsers,
-    toggleFollowProgress,
-    requestUsers,
-    getCurrentPageUsers,
-    unfollow,
-    follow
+    toggleFollow, setUsers, toggleFollowProgress,
+    requestUsers, getCurrentPageUsers, unfollow, follow
 })(UsersContainer);

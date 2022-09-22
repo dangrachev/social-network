@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {NavLink, useHistory} from 'react-router-dom';
-import SidebarFriends from './SidebarFiends/SidebarFriends';
 import {Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper} from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
 import GroupsIcon from '@mui/icons-material/Groups';
@@ -9,11 +8,10 @@ import MailIcon from '@mui/icons-material/Mail';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import SettingsIcon from '@mui/icons-material/Settings';
 import {makeStyles} from "@mui/styles";
-import style from './Navbar.module.css'
 import {ScrollUpButton} from "../common/Forms/ScrollUpButton";
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {
         display: 'flex',
         alignItems: 'center',

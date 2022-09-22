@@ -11,7 +11,7 @@ let initialState = {
     login: null,
     isAuth: false,
     serverErrorMessage: '',
-    captchaURL: null // if null captcha is no need
+    captchaURL: null
 }
 
 const authReducer = (state = initialState, action) => {

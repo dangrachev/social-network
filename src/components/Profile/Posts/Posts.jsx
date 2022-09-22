@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
-import Post from './Post_item/Post_item';
-import {Form} from "../../common/Forms/Form";
+import {Box, Typography, Divider} from "@mui/material";
 import {Input} from "../../common/Forms/Input";
 import {StyledButton} from "../../common/Forms/StyledButton";
-import {Box, Typography, Divider} from "@mui/material";
+import Post from './Post_item/Post_item';
 import style from './Posts.module.css'
 
 
@@ -38,8 +37,10 @@ const Posts = React.memo((props) => {
             <div className={style.posts}>
                 {props.postsData.length
                     ? props.postsData.map(post => <Post key={post.id} message={post.message}
-                                                   likesCount={post.likesCount} profile={props.profile}
-                                                   deletePost={props.deletePost} postId={post.id}/>)
+                                                        postId={post.id} likesCount={post.likesCount}
+                                                        isLiked={post.isLiked}
+                                                        profileAvatar={props.profile?.photos?.small}
+                                                        deletePost={props.deletePost} likePost={props.likePost}/>)
                     : <Typography variant='h6' sx={{margin: '10px 0 15px 0'}}>
                         There are no posts here yet ...</Typography>
                 }

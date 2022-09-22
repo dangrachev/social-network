@@ -3,6 +3,8 @@ import Profile from './Profile';
 import {compose} from 'redux';
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {Box} from "@mui/material";
+import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {
     getMyProfile,
     getUserProfile,
@@ -11,8 +13,6 @@ import {
     updateUserStatus
 } from '../../Redux/profile-reducer';
 import {getNewMessagesCount, startChatting} from "../../Redux/messages-reducer";
-import {withAuthRedirect} from '../hoc/withAuthRedirect';
-import {Box} from "@mui/material";
 
 
 class ProfileContainer extends React.PureComponent {
@@ -48,7 +48,7 @@ class ProfileContainer extends React.PureComponent {
     render() {
         return <Box bgcolor={'background.default'} color={'text.primary'} >
             <Profile {...this.props}
-                     isOwner={!this.props.match.params.userId || this.props.match.params.userId == this.props.authorizedUserId}
+                     isOwner={!this.props.match.params.userId || (Number(this.props.match.params.userId) === this.props.authorizedUserId)}
                      userId={this.props.match.params.userId}/>
         </Box>
     }

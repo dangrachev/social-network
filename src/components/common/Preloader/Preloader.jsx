@@ -1,7 +1,7 @@
 import React from 'react';
-import style from './Preloader.module.css';
-import preloader from '../../../assets/img/preloader.gif';
 import {Box} from "@mui/material";
+import preloader from '../../../assets/img/preloader.gif';
+import style from './Preloader.module.css';
 
 
 let Preloader = () => {
