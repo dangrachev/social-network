@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useLayoutEffect, useState} from "react";
 import {NavLink, useHistory} from 'react-router-dom';
 import {Box, Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Paper} from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
@@ -41,7 +41,7 @@ const Navbar = (props) => {
                     <ListItem disablePadding>
                         <ListItemButton component={NavLink} to={`/profile/${props.authorizedUserId}`}
                                         className={styles.root}
-                                        selected={selectedPath === '/profile' || `/profile/${props.authorizedUserId}`}
+                                        selected={selectedPath === '/profile'}
                                         onClick={(event) => handleListItemClick(event, '/profile')}>
                             <ListItemIcon>
                                 <PersonIcon />
