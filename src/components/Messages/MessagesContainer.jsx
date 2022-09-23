@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {withAuthRedirect} from '../hoc/withAuthRedirect';
 import {compose} from 'redux';
 import DialogItem from './DialogItem/DialogItem';
-import {requestAllDialogs} from "../../Redux/messages-reducer";
+import {getNewMessagesCount, requestAllDialogs} from "../../Redux/messages-reducer";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 
@@ -11,7 +11,8 @@ import Box from '@mui/material/Box';
 const Messages = React.memo((props) => {
 
     useEffect(() => {
-        props.requestAllDialogs()
+        props.requestAllDialogs();
+        props.getNewMessagesCount();
     }, [])
 
     return (
@@ -39,7 +40,7 @@ const mapStateToProps = (state) => {
 
 // конвейер обработчиков
 const MessagesContainer = compose(
-    connect(mapStateToProps, {requestAllDialogs}),
+    connect(mapStateToProps, {requestAllDialogs, getNewMessagesCount}),
     withAuthRedirect
 )(Messages);
 
