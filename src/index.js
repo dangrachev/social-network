@@ -8,7 +8,7 @@ import './index.css';
 
 
 ReactDOM.render(
-    <HashRouter basename={process.env.PUBLIC_URL}>
+    <HashRouter>
         <Provider store={store}>
             <App/>
         </Provider>
