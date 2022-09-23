@@ -26,7 +26,7 @@ const Navbar = (props) => {
     const styles = useStyles();
     const {location} = useHistory();
     const [selectedPath, setSelectedPath] = useState(location.pathname);
-
+    debugger;
     const handleListItemClick = (event, path) => {
         setSelectedPath(path);
     };
@@ -41,8 +41,8 @@ const Navbar = (props) => {
                     <ListItem disablePadding>
                         <ListItemButton component={NavLink} to={`/profile/${props.authorizedUserId}`}
                                         className={styles.root}
-                                        selected={selectedPath === '/profile'}
-                                        onClick={(event) => handleListItemClick(event, '/profile')}>
+                                        selected={selectedPath === `/profile/${props.authorizedUserId}`}
+                                        onClick={(event) => handleListItemClick(event, `/profile/${props.authorizedUserId}`)}>
                             <ListItemIcon>
                                 <PersonIcon />
                             </ListItemIcon>

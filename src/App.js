@@ -53,7 +53,8 @@ const App = (props) => {
                 <Box flex={6} p={2}>
                     <Suspense fallback={<Preloader/>}>
                         <Switch>
-                            <Route exact path='/' render={() => <Redirect from={'/'} to={'/profile'}/>}/>
+                            <Route exact path='/'
+                                   render={() => <Redirect from={'/'} to={`/profile/${props.authorizedUserId}`}/>}/>
                             <Route path='/profile/:userId?'
                                    render={() => <ProfileContainer/>}/>
                             <Route exact path='/messages'
