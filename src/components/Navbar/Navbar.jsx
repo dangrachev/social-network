@@ -41,7 +41,7 @@ const Navbar = (props) => {
                     <ListItem disablePadding>
                         <ListItemButton component={NavLink} to={`/profile/${props.authorizedUserId}`}
                                         className={styles.root}
-                                        selected={selectedPath === '/profile'}
+                                        selected={selectedPath === '/profile' || `/profile/${props.authorizedUserId}`}
                                         onClick={(event) => handleListItemClick(event, '/profile')}>
                             <ListItemIcon>
                                 <PersonIcon />
