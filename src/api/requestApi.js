@@ -1,21 +1,11 @@
 import * as axios from 'axios';
 
-/*
-bunnykilljoy@mail.ru
-vekmnzirfSamurai
-
-testsocialntwrk@mail.ru
-1234567890_Test
-
-test_social-ntwrk@mail.ru
-test_1234567890
-*/
 
 const axiosInstance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     headers: {
-        'API-KEY': /*'b05fd2ad-b039-4e05-bbc7-dfcad75c2669'*/ '0eb49db5-9ece-4db5-99fd-2e449130c801'
+        'API-KEY': '03abb0a8-01a1-449a-8960-6361dced7ff7'
     }
 });
 
