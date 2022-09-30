@@ -12,10 +12,11 @@ API: https://social-network.samuraijs.com/api/1.0
 - связка React & Redux;
 - React-Redux;
 - Thunk middleware (redux-thunk);
-- React-router-dom;
+- React-router-dom (5.3.0);
 - Axios;
 - React Hook Form;
 - UI библеотека MUI;
 - React dropzone;
+- Redux devtools extension;
 - sessionStorage (для сохранения режима темы).
 
