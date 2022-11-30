@@ -8,6 +8,12 @@
 
 API: https://social-network.samuraijs.com/api/1.0
 
+
+Показательный аккаунт:
+логин: test_social-ntwrk@mail.ru,
+пароль: test_1234567890.
+
+
 Что используется в приложении:
 - связка React & Redux;
 - React-Redux;
@@ -19,4 +25,3 @@ API: https://social-network.samuraijs.com/api/1.0
 - React dropzone;
 - Redux devtools extension;
 - sessionStorage (для сохранения режима темы).
-
