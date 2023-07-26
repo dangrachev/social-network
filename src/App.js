@@ -1,4 +1,4 @@
-import React, {Suspense} from 'react';
+import React, {Suspense, useEffect} from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import {compose} from 'redux';
 import {connect} from 'react-redux';
@@ -11,7 +11,7 @@ import MessagesContainer from './components/Messages/MessagesContainer'
 import NavbarContainer from './components/Navbar/NavbarContainer';
 import RightSidebar from "./components/Navbar/RightSidebar";
 import Login from './components/Login/Login';
-import ChatWindowContainer from "./components/Messages/ChatWindowContainer";
+import ChatWindowContainer from './components/Messages/ChatWindowContainer';
 import Preloader from './components/common/Preloader/Preloader';
 import {Box, Stack, ThemeProvider} from '@mui/material';
 import {useTheme} from './components/common/Theme/Theme';
@@ -23,26 +23,19 @@ const Feeds = React.lazy(() => import('./components/Feeds/Feeds'));
 const SettingsContainer = React.lazy(() => import('./components/Settings/SettingsContainer'));
 
 
-class AppContainer extends React.Component {
-
-    componentDidMount() {
-        this.props.initializeApp();
-        this.props.getMyProfile(this.props.authorizedUserId)
-    }
-
-    render() {
-        if(!this.props.initialized) {
-            return <Preloader />
-        }
-        return (
-            <App {...this.props}/>
-        );
-    }
-}
-
 const App = (props) => {
-
     const [themeMode, switchThemeMode, themeModeOptions] = useTheme();
+
+
+    useEffect(() => {
+        props.initializeApp();
+        props.getMyProfile(props.authorizedUserId);
+    }, []);
+
+
+    if (!props.initialized) {
+        return <Preloader />
+    }
 
     return <ThemeProvider theme={themeModeOptions}>
         <Box minHeight="100vh" height="100%" bgcolor={'background.default'} color={'text.primary'} >
@@ -90,4 +83,4 @@ const mapStateToProps = (state) => {
 export default compose(
     connect(mapStateToProps, {initializeApp, getMyProfile, getNewMessagesCount}),
     withRouter
-)(AppContainer);
+)(App);
